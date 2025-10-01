@@ -10,13 +10,14 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="345dp"
-        android:layout_height="346dp"
+        android:layout_width="310dp"
+        android:layout_height="345dp"
         app:layout_constraintBottom_toTopOf="@+id/appNameTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintVertical_bias="0.574"
         app:srcCompat="@drawable/aura_logo" />
 
     <TextView
@@ -24,7 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
-        android:text="AuraWellnessTracker"
+        android:text="@string/app_name"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"

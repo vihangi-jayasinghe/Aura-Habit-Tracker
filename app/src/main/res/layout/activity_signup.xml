@@ -192,14 +192,13 @@
                     </LinearLayout>
 
                     <!-- Sign Up Button -->
-                    <com.google.android.material.button.MaterialButton
+                    <Button
                         android:id="@+id/signUpButton"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:layout_marginTop="24dp"
                         android:text="Create Account"
-                        android:textSize="16sp"
-                        app:cornerRadius="12dp" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
