@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AuraWellnessTracker">
+        <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
+            android:name=".Signup"
+            android:exported="false" />
+        <activity
+            android:name=".Signin"
+            android:exported="false" />
+        <activity
+            android:name=".OnBoarding3"
+            android:exported="false" />
+        <activity
+            android:name=".OnBoarding2"
+            android:exported="false" />
+        <activity
+            android:name=".OnBoarding1"
+            android:exported="false" />
+        <activity
+            android:name=".ui.AddMood"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".UI.Hydration" -->
+        <!-- android:exported="false" -->
+        <!-- android:theme="@style/Theme.AuraWellnessTracker" /> -->
+        <!-- <activity -->
+        <!-- android:name=".UI.Settings" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".UI.Habit" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".UI.Mood" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".UI.Home" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".BottomNavigationActivity" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".UI.Dashboard" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".MainActivity" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <activity
+            android:name=".ui.Dashboard"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.Home" />
+        <activity android:name=".ui.Mood" />
+        <activity android:name=".ui.Habit" />
+        <activity android:name=".ui.Hydration" />
+        <activity android:name=".ui.Settings" />
+    </application>
+
+</manifest>
