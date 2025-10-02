@@ -27,6 +27,7 @@ class Hydration : AppCompatActivity() {
     private lateinit var reminderSwitch: Switch
     private lateinit var waterGoalSeekBar: SeekBar
     private lateinit var reminderIntervalSpinner: Spinner
+    private lateinit var todayDateText: TextView // Add this line
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,7 @@ class Hydration : AppCompatActivity() {
         setupBottomNavigation()
         loadTodayWaterData()
         setupReminderSettings()
+        updateDateDisplay() // Add this line
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -57,6 +59,7 @@ class Hydration : AppCompatActivity() {
         reminderSwitch = findViewById(R.id.reminderSwitch)
         waterGoalSeekBar = findViewById(R.id.waterGoalSeekBar)
         reminderIntervalSpinner = findViewById(R.id.reminderIntervalSpinner)
+        todayDateText = findViewById(R.id.todayDateText) // Add this line
     }
 
     private fun setupButtonListeners() {
@@ -224,6 +227,13 @@ class Hydration : AppCompatActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+    }
+
+    // Add this new function to update the date display
+    private fun updateDateDisplay() {
+        val dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+        val currentDate = dateFormat.format(Date())
+        todayDateText.text = currentDate
     }
 
     private fun updateProgressDisplay() {
