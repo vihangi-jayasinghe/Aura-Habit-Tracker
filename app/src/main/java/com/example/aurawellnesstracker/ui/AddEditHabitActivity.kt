@@ -2,14 +2,10 @@ package com.example.aurawellnesstracker.ui
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aurawellnesstracker.R
-import com.example.aurawellnesstracker.databinding.ActivityAddEditHabitBinding
 import com.example.aurawellnesstracker.model.Habit
 import com.example.aurawellnesstracker.model.HabitCategory
 import com.example.aurawellnesstracker.utils.HabitManager
@@ -19,8 +15,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AddEditHabitActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityAddEditHabitBinding
 
     private lateinit var titleEditText: TextInputEditText
     private lateinit var descriptionEditText: TextInputEditText
@@ -38,10 +32,7 @@ class AddEditHabitActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Initialize View Binding
-        binding = ActivityAddEditHabitBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_add_edit_habit)
 
         // Initialize HabitManager
         HabitManager.initialize(this)
@@ -53,16 +44,16 @@ class AddEditHabitActivity : AppCompatActivity() {
     }
 
     private fun initializeViews() {
-        // Initialize all views using binding
-        titleEditText = binding.titleEditText
-        descriptionEditText = binding.descriptionEditText
-        targetDaysEditText = binding.targetDaysEditText
-        reminderTimeEditText = binding.reminderTimeEditText
-        categorySpinner = binding.categorySpinner
-        saveButton = binding.saveButton
-        cancelButton = binding.cancelButton
-        deleteButton = binding.deleteButton
-        titleTextView = binding.titleTextView
+        // Initialize all views using findViewById
+        titleEditText = findViewById(R.id.titleEditText)
+        descriptionEditText = findViewById(R.id.descriptionEditText)
+        targetDaysEditText = findViewById(R.id.targetDaysEditText)
+        reminderTimeEditText = findViewById(R.id.reminderTimeEditText)
+        categorySpinner = findViewById(R.id.categorySpinner)
+        saveButton = findViewById(R.id.saveButton)
+        cancelButton = findViewById(R.id.cancelButton)
+        deleteButton = findViewById(R.id.deleteButton)
+        titleTextView = findViewById(R.id.titleTextView)
     }
 
     private fun setupViews() {
