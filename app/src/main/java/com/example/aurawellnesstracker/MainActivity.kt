@@ -9,12 +9,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.aurawellnesstracker.utils.UserManager
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        // Initialize UserManager
+        UserManager.initialize(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -35,10 +39,17 @@ class MainActivity : AppCompatActivity() {
                 .start()
         }, 1000)
 
-        // Navigate to OnBoarding1 after 3 seconds total
+        // Check if user is already logged in
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, OnBoarding1::class.java)
-            startActivity(intent)
+            if (UserManager.isUserLoggedIn()) {
+                // User is logged in, go directly to Home
+                val intent = Intent(this, com.example.aurawellnesstracker.ui.Home::class.java)
+                startActivity(intent)
+            } else {
+                // User is not logged in, go to onboarding
+                val intent = Intent(this, OnBoarding1::class.java)
+                startActivity(intent)
+            }
             finish()
         }, 3000)
     }

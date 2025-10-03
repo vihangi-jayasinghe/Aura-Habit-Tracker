@@ -10,7 +10,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.aurawellnesstracker.model.User
 import com.example.aurawellnesstracker.ui.Home
+import com.example.aurawellnesstracker.utils.UserManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
@@ -52,9 +54,7 @@ class Signin : AppCompatActivity() {
         // Sign In button - navigate to Home (after successful login)
         signInButton.setOnClickListener {
             if (validateSignInForm()) {
-                val intent = Intent(this, Home::class.java)
-                startActivity(intent)
-                finish()
+                performSignIn()
             }
         }
 
@@ -63,6 +63,24 @@ class Signin : AppCompatActivity() {
         forgotPasswordText.setOnClickListener {
             Toast.makeText(this, "Forgot Password feature coming soon!", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun performSignIn() {
+        val email = emailEditText.text.toString().trim()
+
+        // For demo purposes, we'll create a user with the email as name
+        // In a real app, you would get this data from your backend
+        val name = email.substringBefore("@").replace(".", " ").split(" ")
+            .joinToString(" ") { it.replaceFirstChar { char -> char.uppercase() } }
+
+        val user = User(name, email)
+        UserManager.setCurrentUser(user)
+
+        Toast.makeText(this, "Welcome back, $name!", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, Home::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun setupRealTimeValidation() {
@@ -140,8 +158,6 @@ class Signin : AppCompatActivity() {
             return false
         }
 
-        // Here you would typically make an API call to authenticate the user
-        Toast.makeText(this, "Signing in...", Toast.LENGTH_SHORT).show()
         return true
     }
 

@@ -6,13 +6,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.aurawellnesstracker.model.User
+import com.example.aurawellnesstracker.utils.UserManager
 import com.google.android.material.textfield.TextInputEditText
 
 class Signup : AppCompatActivity() {
@@ -51,11 +52,7 @@ class Signup : AppCompatActivity() {
         // Create Account button
         signUpButton.setOnClickListener {
             if (validateSignUpForm()) {
-                // Here you would typically save the user data to your backend/database
-                Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, Signin::class.java)
-                startActivity(intent)
-                finish()
+                performSignUp()
             }
         }
 
@@ -66,6 +63,22 @@ class Signup : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun performSignUp() {
+        val name = fullNameEditText.text.toString().trim()
+        val email = emailEditText.text.toString().trim()
+
+        // Create and store user
+        val user = User(name, email)
+        UserManager.setCurrentUser(user)
+
+        Toast.makeText(this, "Account created successfully! Welcome, $name!", Toast.LENGTH_SHORT).show()
+
+        // Navigate directly to Home after signup
+        val intent = Intent(this, com.example.aurawellnesstracker.ui.Home::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun setupRealTimeValidation() {
