@@ -27,7 +27,7 @@ class Hydration : AppCompatActivity() {
     private lateinit var reminderSwitch: Switch
     private lateinit var waterGoalSeekBar: SeekBar
     private lateinit var reminderIntervalSpinner: Spinner
-    private lateinit var todayDateText: TextView // Add this line
+    private lateinit var todayDateText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class Hydration : AppCompatActivity() {
         setupBottomNavigation()
         loadTodayWaterData()
         setupReminderSettings()
-        updateDateDisplay() // Add this line
+        updateDateDisplay()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -59,7 +59,7 @@ class Hydration : AppCompatActivity() {
         reminderSwitch = findViewById(R.id.reminderSwitch)
         waterGoalSeekBar = findViewById(R.id.waterGoalSeekBar)
         reminderIntervalSpinner = findViewById(R.id.reminderIntervalSpinner)
-        todayDateText = findViewById(R.id.todayDateText) // Add this line
+        todayDateText = findViewById(R.id.todayDateText)
     }
 
     private fun setupButtonListeners() {
@@ -98,6 +98,12 @@ class Hydration : AppCompatActivity() {
         // Reminder switch
         reminderSwitch.setOnCheckedChangeListener { _, isChecked ->
             hydrationManager.setReminderEnabled(isChecked)
+            val message = if (isChecked) {
+                "Reminders enabled"
+            } else {
+                "Reminders disabled"
+            }
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -223,13 +229,19 @@ class Hydration : AppCompatActivity() {
                     else -> 60
                 }
                 hydrationManager.setReminderInterval(interval)
+
+                // Show confirmation toast
+                val intervalText = intervals[position]
+                Toast.makeText(this@Hydration,
+                    "Reminders set to $intervalText",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
-    // Add this new function to update the date display
     private fun updateDateDisplay() {
         val dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
         val currentDate = dateFormat.format(Date())

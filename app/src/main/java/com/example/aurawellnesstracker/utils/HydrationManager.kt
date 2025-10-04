@@ -10,6 +10,7 @@ class HydrationManager(context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("HydrationPrefs", Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = sharedPreferences.edit()
     private val gson = Gson()
+    private val reminderScheduler = ReminderScheduler(context)
 
     companion object {
         private const val KEY_WATER_ENTRIES = "water_entries"
@@ -17,6 +18,14 @@ class HydrationManager(context: Context) {
         private const val KEY_REMINDER_ENABLED = "water_reminder_enabled"
         private const val KEY_REMINDER_INTERVAL = "water_reminder_interval"
         private const val DEFAULT_GOAL = 2000 // 2L in ml
+    }
+
+    init {
+        // Schedule reminders if they're enabled
+        if (isReminderEnabled()) {
+            val interval = getReminderInterval()
+            reminderScheduler.updateReminder(true, interval)
+        }
     }
 
     // Add water entry
@@ -99,7 +108,12 @@ class HydrationManager(context: Context) {
 
     // Set reminder enabled
     fun setReminderEnabled(enabled: Boolean): Boolean {
-        return editor.putBoolean(KEY_REMINDER_ENABLED, enabled).commit()
+        val success = editor.putBoolean(KEY_REMINDER_ENABLED, enabled).commit()
+        if (success) {
+            val interval = getReminderInterval()
+            reminderScheduler.updateReminder(enabled, interval)
+        }
+        return success
     }
 
     // Get reminder enabled
@@ -109,7 +123,11 @@ class HydrationManager(context: Context) {
 
     // Set reminder interval
     fun setReminderInterval(interval: Int): Boolean {
-        return editor.putInt(KEY_REMINDER_INTERVAL, interval).commit()
+        val success = editor.putInt(KEY_REMINDER_INTERVAL, interval).commit()
+        if (success && isReminderEnabled()) {
+            reminderScheduler.updateReminder(true, interval)
+        }
+        return success
     }
 
     // Get reminder interval
