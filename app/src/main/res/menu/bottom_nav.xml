@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeBtn10"
+        android:icon="@drawable/ic_home"
+        android:title="@string/bottom" />
+    <item
+        android:id="@+id/productBtn10"
+        android:icon="@drawable/ic_habits"
+        android:title="@string/bottom1" />
+    <item
+        android:id="@+id/expertsBtn10"
+        android:icon="@drawable/ic_mood_happy"
+        android:title="@string/bottom2" />
+    <item
+        android:id="@+id/profileBtn10"
+        android:icon="@drawable/ic_water"
+        android:title="@string/bottom3" />
+
+    <item
+        android:id="@+id/profileBtn11"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/bottom4" />
+
+</menu>
