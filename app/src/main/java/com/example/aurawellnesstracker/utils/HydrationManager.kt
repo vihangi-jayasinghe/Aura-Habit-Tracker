@@ -2,6 +2,7 @@ package com.example.aurawellnesstracker.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.example.aurawellnesstracker.model.WaterEntry
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -21,10 +22,14 @@ class HydrationManager(context: Context) {
     }
 
     init {
-        // Schedule reminders if they're enabled
+        // Schedule reminders if they're enabled - use exact timing
         if (isReminderEnabled()) {
             val interval = getReminderInterval()
+            Log.d("HydrationManager", "Initializing with reminders enabled, interval: $interval minutes")
             reminderScheduler.updateReminder(true, interval)
+        } else {
+            Log.d("HydrationManager", "Initializing with reminders disabled")
+            reminderScheduler.cancelReminder()
         }
     }
 
@@ -111,6 +116,7 @@ class HydrationManager(context: Context) {
         val success = editor.putBoolean(KEY_REMINDER_ENABLED, enabled).commit()
         if (success) {
             val interval = getReminderInterval()
+            Log.d("HydrationManager", "Setting reminder enabled: $enabled, interval: $interval minutes")
             reminderScheduler.updateReminder(enabled, interval)
         }
         return success
@@ -124,15 +130,18 @@ class HydrationManager(context: Context) {
     // Set reminder interval
     fun setReminderInterval(interval: Int): Boolean {
         val success = editor.putInt(KEY_REMINDER_INTERVAL, interval).commit()
-        if (success && isReminderEnabled()) {
-            reminderScheduler.updateReminder(true, interval)
+        if (success) {
+            // Always update the scheduler when interval changes
+            val isEnabled = isReminderEnabled()
+            Log.d("HydrationManager", "Setting reminder interval: $interval minutes, enabled: $isEnabled")
+            reminderScheduler.updateReminder(isEnabled, interval)
         }
         return success
     }
 
     // Get reminder interval
     fun getReminderInterval(): Int {
-        return sharedPreferences.getInt(KEY_REMINDER_INTERVAL, 60) // 60 minutes default
+        return sharedPreferences.getInt(KEY_REMINDER_INTERVAL, 10)
     }
 
     // Get completion percentage
