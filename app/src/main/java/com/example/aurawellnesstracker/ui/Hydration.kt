@@ -251,7 +251,7 @@ class Hydration : AppCompatActivity() {
         reminderSwitch.isChecked = hydrationManager.isReminderEnabled()
 
         // Setup reminder interval spinner
-        val intervals = arrayOf("5 minutes", "10 minutes", "20 minutes", "1 hours")
+        val intervals = arrayOf("5 minutes", "10 minutes", "20 minutes", "1 hour")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, intervals)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         reminderIntervalSpinner.adapter = adapter
