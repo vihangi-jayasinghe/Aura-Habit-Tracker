@@ -19,6 +19,8 @@
     <color name="gray">#9E9E9E</color>
     <color name="red">#F44336</color>
 
+    <color name="warning_color">#FFFF9800</color>
+
 <!-- Primary Colors -->
 <color name="primary">#4CAF50</color> <!-- Fresh Green -->
 <color name="primary_variant">#388E3C</color> <!-- Darker Green -->

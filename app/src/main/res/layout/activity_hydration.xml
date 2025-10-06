@@ -179,6 +179,79 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Weekly Progress Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/weeklyCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressCard"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_chart"
+                            app:tint="@color/primary_color" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Weekly Progress"
+                            android:textColor="@color/text_primary"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Your hydration progress over the last 7 days"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <!-- Line Chart Container -->
+                    <LinearLayout
+                        android:id="@+id/weeklyChartLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/white_rounded_background">
+
+                        <!-- Line chart will be drawn here programmatically -->
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <!-- Quick Add Water Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/quickAddCard"
@@ -192,7 +265,7 @@
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/progressCard"
+                app:layout_constraintTop_toBottomOf="@+id/weeklyCard"
                 app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
 
@@ -248,42 +321,33 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:layout_marginStart="8dp"
-                            android:text="1L"
+                            android:text="1000ml"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="12dp" />
+
                     </LinearLayout>
 
-                    <!-- Custom Amount -->
+                    <!-- Custom Water Input -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center">
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <EditText
+                            android:id="@+id/customWaterAmount"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:layout_weight="1"
-                            android:layout_marginEnd="12dp"
+                            android:layout_marginEnd="8dp"
                             android:hint="Custom amount (ml)"
-                            app:boxBackgroundMode="outline"
-                            app:boxCornerRadiusBottomEnd="12dp"
-                            app:boxCornerRadiusBottomStart="12dp"
-                            app:boxCornerRadiusTopEnd="12dp"
-                            app:boxCornerRadiusTopStart="12dp"
-                            app:boxStrokeColor="@color/primary_color"
-                            app:prefixText="ml"
-                            app:prefixTextColor="@color/text_secondary">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/customWaterAmount"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:inputType="number"
-                                android:maxLines="1"
-                                android:padding="16dp" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:background="@drawable/white_rounded_background"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:textSize="14sp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/addCustomWater"
@@ -291,15 +355,17 @@
                             android:layout_height="50dp"
                             android:text="Add"
                             android:textSize="14sp"
+                            style="@style/Widget.Material3.Button"
                             app:cornerRadius="12dp" />
+
                     </LinearLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Daily Goal Card -->
+            <!-- Water History Card -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/goalCard"
+                android:id="@+id/historyCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -323,210 +389,201 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Daily Water Goal"
+                        android:text="Today's History"
                         android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="16dp" />
 
-                    <SeekBar
-                        android:id="@+id/waterGoalSeekBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:max="40"
-                        android:progress="20" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="1.0L"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/currentGoalText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="2.0L"
-                            android:textColor="@color/primary_color"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="4.0L"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Reminder Settings Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/reminderCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:cardBackgroundColor="@color/card_background"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goalCard"
-                app:strokeColor="@color/card_stroke"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="24dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginEnd="12dp"
-                            android:src="@drawable/ic_notifications"
-                            app:tint="@color/primary_color" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hydration Reminders"
-                            android:textColor="@color/text_primary"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <Switch
-                            android:id="@+id/reminderSwitch"
-                            android:layout_width="27dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:gravity="end" />
-
-                    </LinearLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/testNotificationButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="16dp"
-                        android:text="Test Notification Now"
-                        android:textSize="12sp"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        app:cornerRadius="8dp" />
-
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/emptyHistoryText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Get reminded to drink water regularly"
+                        android:gravity="center"
+                        android:padding="40dp"
+                        android:text="No water entries yet today.\nStart by adding some water!"
                         android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:id="@+id/reminderSettingsLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Reminder Interval"
-                            android:textColor="@color/text_primary"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="8dp" />
-
-                        <Spinner
-                            android:id="@+id/reminderIntervalSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@drawable/white_rounded_background"
-                            android:paddingStart="16dp"
-                            android:paddingEnd="16dp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Hydration History Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/historyCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/card_background"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reminderCard"
-                app:strokeColor="@color/card_stroke"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="24dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Today's Intake History"
-                        android:textColor="@color/text_primary"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="16dp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:id="@+id/waterHistoryLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Water entries will be added here dynamically -->
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Settings Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/settingsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/historyCard"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Settings"
+                        android:textColor="@color/text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Daily Goal Setting -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:minHeight="120dp">
+                        android:layout_marginBottom="16dp">
 
                         <TextView
-                            android:id="@+id/emptyHistoryText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:lineSpacingExtra="8dp"
-                            android:padding="40dp"
-                            android:text="No water intake recorded today\nTap the buttons above to add water"
+                            android:text="Daily Water Goal"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/currentGoalText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="2.0L"
+                            android:textColor="@color/primary_color"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <SeekBar
+                            android:id="@+id/waterGoalSeekBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:max="30"
+                            android:progress="10"
+                            android:progressTint="@color/primary_color" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="1.0L"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2.0L"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:text="4.0L"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Reminder Settings -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reminders"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Get reminded to drink water regularly"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp" />
 
-                        <!-- Water history entries will be added dynamically here -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="12dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Enable Reminders"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp" />
+
+                            <Switch
+                                android:id="@+id/reminderSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="12dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Reminder Interval"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp" />
+
+                            <Spinner
+                                android:id="@+id/reminderIntervalSpinner"
+                                android:layout_width="120dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/white_rounded_background" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -536,7 +593,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation - Fixed at bottom -->
+    <!-- Bottom Navigation -->
     <include
         android:id="@+id/bottomNavigation"
         layout="@layout/bottom_navigation_view"

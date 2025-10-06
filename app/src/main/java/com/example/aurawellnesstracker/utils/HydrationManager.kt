@@ -6,6 +6,7 @@ import android.util.Log
 import com.example.aurawellnesstracker.model.WaterEntry
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.*
 
 class HydrationManager(context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("HydrationPrefs", Context.MODE_PRIVATE)
@@ -65,21 +66,77 @@ class HydrationManager(context: Context) {
     // Get today's water entries
     fun getTodayWaterEntries(): List<WaterEntry> {
         val today = System.currentTimeMillis()
-        val calendar = java.util.Calendar.getInstance().apply {
+        val calendar = Calendar.getInstance().apply {
             timeInMillis = today
-            set(java.util.Calendar.HOUR_OF_DAY, 0)
-            set(java.util.Calendar.MINUTE, 0)
-            set(java.util.Calendar.SECOND, 0)
-            set(java.util.Calendar.MILLISECOND, 0)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
         }
         val startOfDay = calendar.timeInMillis
 
-        calendar.add(java.util.Calendar.DAY_OF_MONTH, 1)
+        calendar.add(Calendar.DAY_OF_MONTH, 1)
         val endOfDay = calendar.timeInMillis - 1
 
         return getAllWaterEntries().filter {
             it.timestamp in startOfDay..endOfDay
         }
+    }
+
+    // Get weekly water data (last 7 days including today)
+    fun getWeeklyWaterData(): List<DailyWaterData> {
+        val calendar = Calendar.getInstance()
+        val weeklyData = mutableListOf<DailyWaterData>()
+
+        // Get data for last 7 days
+        for (i in 6 downTo 0) {
+            val currentCalendar = Calendar.getInstance()
+            currentCalendar.add(Calendar.DAY_OF_MONTH, -i)
+
+            val dayStart = currentCalendar.apply {
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }.timeInMillis
+
+            val dayEnd = currentCalendar.apply {
+                add(Calendar.DAY_OF_MONTH, 1)
+            }.timeInMillis - 1
+
+            val dayEntries = getAllWaterEntries().filter {
+                it.timestamp in dayStart..dayEnd
+            }
+
+            val totalWater = dayEntries.sumOf { it.amount }
+            val goal = getDailyGoal()
+            val percentage = if (goal > 0) {
+                (totalWater * 100) / goal
+            } else {
+                0
+            }
+
+            // Get day name
+            val dayName = when (i) {
+                0 -> "Today"
+                1 -> "Yesterday"
+                else -> {
+                    currentCalendar.timeInMillis = dayStart
+                    val dayNames = arrayOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+                    dayNames[currentCalendar.get(Calendar.DAY_OF_WEEK) - 1]
+                }
+            }
+
+            weeklyData.add(DailyWaterData(
+                date = dayStart,
+                totalWater = totalWater,
+                goal = goal,
+                percentage = percentage,
+                dayName = dayName
+            ))
+        }
+
+        return weeklyData
     }
 
     // Get today's total water intake
@@ -155,3 +212,11 @@ class HydrationManager(context: Context) {
         }
     }
 }
+
+data class DailyWaterData(
+    val date: Long,
+    val totalWater: Int,
+    val goal: Int,
+    val percentage: Int,
+    val dayName: String
+)
