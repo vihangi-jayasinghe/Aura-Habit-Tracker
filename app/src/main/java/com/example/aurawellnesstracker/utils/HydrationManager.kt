@@ -2,6 +2,7 @@ package com.example.aurawellnesstracker.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.example.aurawellnesstracker.model.WaterEntry
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -10,6 +11,7 @@ class HydrationManager(context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("HydrationPrefs", Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = sharedPreferences.edit()
     private val gson = Gson()
+    private val reminderScheduler = ReminderScheduler(context)
 
     companion object {
         private const val KEY_WATER_ENTRIES = "water_entries"
@@ -17,6 +19,18 @@ class HydrationManager(context: Context) {
         private const val KEY_REMINDER_ENABLED = "water_reminder_enabled"
         private const val KEY_REMINDER_INTERVAL = "water_reminder_interval"
         private const val DEFAULT_GOAL = 2000 // 2L in ml
+    }
+
+    init {
+        // Schedule reminders if they're enabled - use exact timing
+        if (isReminderEnabled()) {
+            val interval = getReminderInterval()
+            Log.d("HydrationManager", "Initializing with reminders enabled, interval: $interval minutes")
+            reminderScheduler.updateReminder(true, interval)
+        } else {
+            Log.d("HydrationManager", "Initializing with reminders disabled")
+            reminderScheduler.cancelReminder()
+        }
     }
 
     // Add water entry
@@ -99,7 +113,13 @@ class HydrationManager(context: Context) {
 
     // Set reminder enabled
     fun setReminderEnabled(enabled: Boolean): Boolean {
-        return editor.putBoolean(KEY_REMINDER_ENABLED, enabled).commit()
+        val success = editor.putBoolean(KEY_REMINDER_ENABLED, enabled).commit()
+        if (success) {
+            val interval = getReminderInterval()
+            Log.d("HydrationManager", "Setting reminder enabled: $enabled, interval: $interval minutes")
+            reminderScheduler.updateReminder(enabled, interval)
+        }
+        return success
     }
 
     // Get reminder enabled
@@ -109,12 +129,19 @@ class HydrationManager(context: Context) {
 
     // Set reminder interval
     fun setReminderInterval(interval: Int): Boolean {
-        return editor.putInt(KEY_REMINDER_INTERVAL, interval).commit()
+        val success = editor.putInt(KEY_REMINDER_INTERVAL, interval).commit()
+        if (success) {
+            // Always update the scheduler when interval changes
+            val isEnabled = isReminderEnabled()
+            Log.d("HydrationManager", "Setting reminder interval: $interval minutes, enabled: $isEnabled")
+            reminderScheduler.updateReminder(isEnabled, interval)
+        }
+        return success
     }
 
     // Get reminder interval
     fun getReminderInterval(): Int {
-        return sharedPreferences.getInt(KEY_REMINDER_INTERVAL, 60) // 60 minutes default
+        return sharedPreferences.getInt(KEY_REMINDER_INTERVAL, 10)
     }
 
     // Get completion percentage

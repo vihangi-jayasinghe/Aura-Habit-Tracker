@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -42,14 +45,20 @@
         <activity
             android:name=".OnBoarding2"
             android:exported="false" />
-        <activity
-            android:name=".ui.AddMood"
-            android:exported="false" />
         <activity android:name=".ui.Home" />
         <activity android:name=".ui.Mood" />
         <activity android:name=".ui.Habit" />
         <activity android:name=".ui.Hydration" />
         <activity android:name=".ui.Settings" />
+
+        <receiver
+            android:name=".utils.HydrationReminderReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="HYDRATION_REMINDER_ACTION" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
