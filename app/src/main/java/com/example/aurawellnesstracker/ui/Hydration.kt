@@ -1,7 +1,6 @@
 package com.example.aurawellnesstracker.ui
 
 import android.content.Intent
-import android.graphics.*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.aurawellnesstracker.R
 import com.example.aurawellnesstracker.model.WaterEntry
-import com.example.aurawellnesstracker.utils.DailyWaterData
 import com.example.aurawellnesstracker.utils.HydrationManager
 import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
@@ -20,10 +18,6 @@ import android.content.pm.PackageManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import com.example.aurawellnesstracker.utils.NotificationHelper
-import com.example.aurawellnesstracker.utils.ReminderScheduler
 import java.util.*
 
 class Hydration : AppCompatActivity() {
@@ -38,7 +32,6 @@ class Hydration : AppCompatActivity() {
     private lateinit var waterGoalSeekBar: SeekBar
     private lateinit var reminderIntervalSpinner: Spinner
     private lateinit var todayDateText: TextView
-    private lateinit var weeklyChartLayout: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +46,6 @@ class Hydration : AppCompatActivity() {
             loadTodayWaterData()
             setupReminderSettings()
             updateDateDisplay()
-
-            // Load weekly chart with delay to ensure layout is ready
-            weeklyChartLayout.post {
-                loadWeeklyChart()
-            }
 
             checkAndRequestNotificationPermission()
 
@@ -83,7 +71,6 @@ class Hydration : AppCompatActivity() {
         waterGoalSeekBar = findViewById(R.id.waterGoalSeekBar)
         reminderIntervalSpinner = findViewById(R.id.reminderIntervalSpinner)
         todayDateText = findViewById(R.id.todayDateText)
-        weeklyChartLayout = findViewById(R.id.weeklyChartLayout)
     }
 
     private fun setupButtonListeners() {
@@ -112,7 +99,6 @@ class Hydration : AppCompatActivity() {
                     val goal = (progress + 10) * 100 // Convert to ml (1.0L to 4.0L)
                     hydrationManager.setDailyGoal(goal)
                     updateProgressDisplay()
-                    loadWeeklyChart() // Refresh chart when goal changes
                 }
             }
 
@@ -141,7 +127,6 @@ class Hydration : AppCompatActivity() {
         if (hydrationManager.addWaterEntry(entry)) {
             Toast.makeText(this, "Added ${amount}ml water", Toast.LENGTH_SHORT).show()
             loadTodayWaterData()
-            loadWeeklyChart() // Refresh chart when water is added
         }
     }
 
@@ -232,7 +217,6 @@ class Hydration : AppCompatActivity() {
         if (hydrationManager.deleteWaterEntry(entryId)) {
             Toast.makeText(this, "Water entry deleted", Toast.LENGTH_SHORT).show()
             loadTodayWaterData()
-            loadWeeklyChart() // Refresh chart when entry is deleted
         }
     }
 
@@ -290,46 +274,10 @@ class Hydration : AppCompatActivity() {
         loadTodayWaterData()
     }
 
-    private fun loadWeeklyChart() {
-        try {
-            weeklyChartLayout.removeAllViews()
-            val weeklyData = hydrationManager.getWeeklyWaterData()
-
-            if (weeklyData.isEmpty()) {
-                val emptyText = TextView(this).apply {
-                    text = "No weekly data available"
-                    setTextColor(getColor(R.color.text_secondary))
-                    textSize = 14f
-                    gravity = android.view.Gravity.CENTER
-                    setPadding(0, 40, 0, 40)
-                }
-                weeklyChartLayout.addView(emptyText)
-                return
-            }
-
-            // Create line chart view
-            val lineChartView = LineChartView(this, weeklyData)
-            weeklyChartLayout.addView(lineChartView)
-
-        } catch (e: Exception) {
-            Log.e("WeeklyChart", "Error loading weekly chart", e)
-            // Show error message
-            val errorText = TextView(this).apply {
-                text = "Error loading chart"
-                setTextColor(getColor(R.color.error_color))
-                textSize = 14f
-                gravity = android.view.Gravity.CENTER
-                setPadding(0, 40, 0, 40)
-            }
-            weeklyChartLayout.addView(errorText)
-        }
-    }
-
     companion object {
         private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1001
     }
 
-    // Add this method to check and request permission
     private fun checkAndRequestNotificationPermission() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             when {
@@ -366,7 +314,6 @@ class Hydration : AppCompatActivity() {
         }
     }
 
-    // Add this to handle permission result
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -409,7 +356,6 @@ class Hydration : AppCompatActivity() {
         findViewById<ImageView>(R.id.profileBtn10).setOnClickListener {
             // Already on hydration page, refresh
             loadTodayWaterData()
-            loadWeeklyChart()
         }
 
         findViewById<ImageView>(R.id.profileBtn11).setOnClickListener {
@@ -417,131 +363,6 @@ class Hydration : AppCompatActivity() {
             startActivity(intent)
             finish()
             overridePendingTransition(0, 0)
-        }
-    }
-}
-
-// Custom Line Chart View
-class LineChartView(context: android.content.Context, private val weeklyData: List<DailyWaterData>) : View(context) {
-    private val paintLine = Paint().apply {
-        color = Color.parseColor("#2196F3")
-        style = Paint.Style.STROKE
-        strokeWidth = 4f
-        isAntiAlias = true
-        strokeCap = Paint.Cap.ROUND
-        strokeJoin = Paint.Join.ROUND
-    }
-
-    private val paintFill = Paint().apply {
-        color = Color.parseColor("#E3F2FD")
-        style = Paint.Style.FILL
-        isAntiAlias = true
-    }
-
-    private val paintPoint = Paint().apply {
-        color = Color.parseColor("#2196F3")
-        style = Paint.Style.FILL
-        isAntiAlias = true
-    }
-
-    private val paintText = Paint().apply {
-        color = Color.parseColor("#757575")
-        textSize = 36f
-        isAntiAlias = true
-        textAlign = Paint.Align.CENTER
-    }
-
-    private val paintGrid = Paint().apply {
-        color = Color.parseColor("#E0E0E0")
-        style = Paint.Style.STROKE
-        strokeWidth = 1f
-        isAntiAlias = true
-    }
-
-    private val paddingLeft = 60f
-    private val paddingRight = 60f
-    private val paddingTop = 40f
-    private val paddingBottom = 60f
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
-        if (weeklyData.isEmpty()) return
-
-        val width = width.toFloat()
-        val height = height.toFloat()
-        val chartWidth = width - paddingLeft - paddingRight
-        val chartHeight = height - paddingTop - paddingBottom
-
-        // Draw grid lines
-        for (i in 0..4) {
-            val y = paddingTop + (chartHeight * i / 4)
-            canvas.drawLine(paddingLeft, y, width - paddingRight, y, paintGrid)
-        }
-
-        // Draw Y-axis labels (0%, 25%, 50%, 75%, 100%)
-        for (i in 0..4) {
-            val y = paddingTop + (chartHeight * i / 4)
-            val percentage = 100 - (i * 25)
-            canvas.drawText("$percentage%", paddingLeft - 30, y + 10, paintText.apply { textSize = 28f })
-        }
-
-        // Find max percentage for scaling
-        val maxPercentage = weeklyData.maxOfOrNull { it.percentage } ?: 100
-        val scaleFactor = if (maxPercentage > 0) 100f / maxPercentage else 1f
-
-        // Prepare points for the line
-        val points = mutableListOf<PointF>()
-        val xStep = chartWidth / (weeklyData.size - 1)
-
-        weeklyData.forEachIndexed { index, dayData ->
-            val x = paddingLeft + (index * xStep)
-            // Scale the percentage to fit within chart height, but cap at 100%
-            val scaledPercentage = (dayData.percentage * scaleFactor).coerceAtMost(100f)
-            val y = paddingTop + chartHeight - (chartHeight * scaledPercentage / 100f)
-            points.add(PointF(x, y))
-
-            // Draw day labels at bottom
-            canvas.drawText(dayData.dayName, x, height - paddingBottom + 40, paintText.apply { textSize = 32f })
-
-            // Draw percentage labels above points
-            canvas.drawText("${dayData.percentage}%", x, y - 20, paintText.apply {
-                textSize = 28f
-                color = when {
-                    dayData.percentage >= 100 -> Color.parseColor("#4CAF50")
-                    dayData.percentage >= 50 -> Color.parseColor("#2196F3")
-                    else -> Color.parseColor("#F44336")
-                }
-            })
-        }
-
-        // Draw filled area under the line
-        if (points.size >= 2) {
-            val path = Path()
-            path.moveTo(paddingLeft, height - paddingBottom)
-            points.forEach { point ->
-                path.lineTo(point.x, point.y)
-            }
-            path.lineTo(width - paddingRight, height - paddingBottom)
-            path.close()
-            canvas.drawPath(path, paintFill)
-        }
-
-        // Draw the line
-        if (points.size >= 2) {
-            for (i in 0 until points.size - 1) {
-                canvas.drawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y, paintLine)
-            }
-        }
-
-        // Draw points
-        points.forEach { point ->
-            canvas.drawCircle(point.x, point.y, 8f, paintPoint)
-            // Draw outer circle
-            paintPoint.color = Color.parseColor("#BBDEFB")
-            canvas.drawCircle(point.x, point.y, 12f, paintPoint)
-            paintPoint.color = Color.parseColor("#2196F3")
-            canvas.drawCircle(point.x, point.y, 6f, paintPoint)
         }
     }
 }
