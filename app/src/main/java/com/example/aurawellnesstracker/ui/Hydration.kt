@@ -130,38 +130,6 @@ class Hydration : AppCompatActivity() {
             }
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
-
-
-    }
-
-    private fun testNotificationImmediately() {
-        Log.d("HydrationTest", "Manual test notification triggered")
-        NotificationHelper(this).showHydrationReminder()
-        Toast.makeText(this, "Test notification sent!", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun debugReminderSchedule() {
-        val workManager = WorkManager.getInstance(this)
-        workManager.getWorkInfosForUniqueWorkLiveData(ReminderScheduler.REMINDER_WORK_NAME)
-            .observe(this) { workInfos ->
-                workInfos.forEach { workInfo ->
-                    Log.d("HydrationDebug", "Work State: ${workInfo.state}")
-                    Log.d("HydrationDebug", "Work ID: ${workInfo.id}")
-                    Log.d("HydrationDebug", "Tags: ${workInfo.tags}")
-
-                    // Alternative way to check if work is scheduled
-                    if (workInfo.state == WorkInfo.State.ENQUEUED) {
-                        Log.d("HydrationDebug", "Work is scheduled and waiting")
-                    }
-                }
-
-                // Log the count of work infos
-                Log.d("HydrationDebug", "Total work infos: ${workInfos.size}")
-
-                // Check if any work is enqueued
-                val hasEnqueuedWork = workInfos.any { it.state == WorkInfo.State.ENQUEUED }
-                Log.d("HydrationDebug", "Has enqueued work: $hasEnqueuedWork")
-            }
     }
 
     private fun addWater(amount: Int) {
@@ -205,11 +173,22 @@ class Hydration : AppCompatActivity() {
         // Update progress text
         progressText.text = "$percentage% Completed"
 
+        // Update goal info text dynamically
+        updateGoalInfoText(goal)
+
         // Load water history
         loadWaterHistory()
 
         // Update goal seekbar
         waterGoalSeekBar.progress = (goal / 100) - 10
+    }
+
+    private fun updateGoalInfoText(goal: Int) {
+        // Find the goal info text view in the circular progress layout
+        val circularProgressLayout = findViewById<RelativeLayout>(R.id.circularProgressLayout)
+        val goalInfoText = circularProgressLayout?.findViewById<TextView>(R.id.goalInfoText)
+
+        goalInfoText?.text = String.format("of %.1fL goal", goal / 1000.0)
     }
 
     private fun loadWaterHistory() {

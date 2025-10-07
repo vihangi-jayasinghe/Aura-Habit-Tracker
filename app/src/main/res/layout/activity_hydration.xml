@@ -116,6 +116,7 @@
                         android:layout_marginBottom="16dp">
 
                         <RelativeLayout
+                            android:id="@+id/circularProgressLayout"
                             android:layout_width="150dp"
                             android:layout_height="150dp">
 
@@ -152,6 +153,7 @@
                                     android:textSize="14sp" />
 
                                 <TextView
+                                    android:id="@+id/goalInfoText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
@@ -445,7 +447,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Settings"
+                        android:text="Hydration Settings"
                         android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -464,57 +466,55 @@
                             android:text="Daily Water Goal"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1.0L"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="14sp" />
+
+                            <SeekBar
+                                android:id="@+id/waterGoalSeekBar"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginEnd="12dp"
+                                android:max="30"
+                                android:progress="10" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="4.0L"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/currentGoalText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/pill_background"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="8dp"
                             android:text="2.0L"
                             android:textColor="@color/primary_color"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                        <SeekBar
-                            android:id="@+id/waterGoalSeekBar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:max="30"
-                            android:progress="10"
-                            android:progressTint="@color/primary_color" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="1.0L"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2.0L"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="end"
-                                android:text="4.0L"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
                     </LinearLayout>
 
                     <!-- Reminder Settings -->
@@ -529,36 +529,27 @@
                             android:text="Reminders"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Get reminded to drink water regularly"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="14sp" />
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_marginTop="12dp">
+                            android:gravity="center_vertical">
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Enable Reminders"
+                                android:text="Enable Hydration Reminders"
                                 android:textColor="@color/text_primary"
                                 android:textSize="14sp" />
 
                             <Switch
                                 android:id="@+id/reminderSwitch"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="true" />
+                                android:layout_height="wrap_content" />
 
                         </LinearLayout>
 
@@ -579,9 +570,9 @@
 
                             <Spinner
                                 android:id="@+id/reminderIntervalSpinner"
-                                android:layout_width="120dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/white_rounded_background" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minWidth="120dp" />
 
                         </LinearLayout>
 
@@ -591,6 +582,7 @@
             </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 
     <!-- Bottom Navigation -->

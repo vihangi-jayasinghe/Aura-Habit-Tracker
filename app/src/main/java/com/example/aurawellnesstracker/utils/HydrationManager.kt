@@ -6,6 +6,7 @@ import android.util.Log
 import com.example.aurawellnesstracker.model.WaterEntry
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.text.SimpleDateFormat
 import java.util.*
 
 class HydrationManager(context: Context) {
@@ -128,11 +129,10 @@ class HydrationManager(context: Context) {
             }
 
             weeklyData.add(DailyWaterData(
-                date = dayStart,
+                dayName = dayName,
                 totalWater = totalWater,
-                goal = goal,
                 percentage = percentage,
-                dayName = dayName
+                date = Date(dayStart)
             ))
         }
 
@@ -213,10 +213,10 @@ class HydrationManager(context: Context) {
     }
 }
 
+// Define DailyWaterData class in the same file
 data class DailyWaterData(
-    val date: Long,
+    val dayName: String,
     val totalWater: Int,
-    val goal: Int,
     val percentage: Int,
-    val dayName: String
+    val date: Date
 )
