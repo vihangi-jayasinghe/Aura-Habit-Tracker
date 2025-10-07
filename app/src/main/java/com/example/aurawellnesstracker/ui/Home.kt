@@ -89,7 +89,9 @@ class Home : AppCompatActivity() {
         }
 
         findViewById<MaterialButton>(R.id.viewProgressButton).setOnClickListener {
-            Toast.makeText(this, "Progress view coming soon!", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, OverviewActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
         }
     }
 

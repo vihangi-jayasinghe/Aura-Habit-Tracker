@@ -400,19 +400,35 @@
                             app:iconGravity="textStart"
                             app:iconPadding="8dp" />
 
+<!--                        <com.google.android.material.button.MaterialButton-->
+<!--                            android:id="@+id/viewProgressButton"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="50dp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:layout_marginStart="8dp"-->
+<!--                            android:text="Overview"-->
+<!--                            android:textSize="14sp"-->
+<!--                            style="@style/Widget.Material3.Button.OutlinedButton"-->
+<!--                            app:cornerRadius="12dp"-->
+<!--                            app:icon="@drawable/ic_analytics"-->
+<!--                            app:iconGravity="textStart"-->
+<!--                            app:iconPadding="8dp" />-->
+
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/viewProgressButton"
                             android:layout_width="0dp"
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:layout_marginStart="8dp"
-                            android:text="Progress"
+                            android:text="Overview"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="12dp"
                             app:icon="@drawable/ic_analytics"
                             app:iconGravity="textStart"
                             app:iconPadding="8dp" />
+
+
                     </LinearLayout>
 
                 </LinearLayout>
