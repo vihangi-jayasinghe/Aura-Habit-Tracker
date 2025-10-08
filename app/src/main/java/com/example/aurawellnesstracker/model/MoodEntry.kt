@@ -38,7 +38,6 @@ data class MoodEntry(
             }
         }
 
-        // This method is no longer used but kept for compatibility
         fun getColorForMood(moodType: String): String {
             return "#6750A4" // Return primary color for all moods
         }

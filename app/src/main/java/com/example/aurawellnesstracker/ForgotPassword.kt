@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -31,9 +32,23 @@ class ForgotPassword : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // Setup back pressed callback
+        setupBackPressedCallback()
         initializeViews()
         setupButtonClickListeners()
         setupRealTimeValidation()
+    }
+
+    private fun setupBackPressedCallback() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Handle the back button event
+                finish()
+                overridePendingTransition(0, 0)
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     private fun initializeViews() {
@@ -46,7 +61,7 @@ class ForgotPassword : AppCompatActivity() {
     private fun setupButtonClickListeners() {
         // Back button
         findViewById<View>(R.id.backButton).setOnClickListener {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
 
         // Send Instructions button
@@ -119,19 +134,14 @@ class ForgotPassword : AppCompatActivity() {
 
         // Simulate API call delay
         emailEditText.postDelayed({
-            // In a real app, you would call your backend API here
-            // For demo purposes, we'll simulate a successful response
 
-            // Hide the form and show success message
             findViewById<MaterialCardView>(R.id.resetCard).visibility = View.GONE
             successCard.visibility = View.VISIBLE
             successMessage.text = "Reset instructions sent to $email"
 
-            // Show success message
             Toast.makeText(this, "Reset instructions sent successfully!", Toast.LENGTH_LONG).show()
 
-            // Reset button state (in case user goes back)
-            sendInstructionsButton.text = "Send Reset Instructions"
+             sendInstructionsButton.text = "Send Reset Instructions"
             sendInstructionsButton.isEnabled = true
 
         }, 2000) // 2 second delay to simulate network request
@@ -140,10 +150,5 @@ class ForgotPassword : AppCompatActivity() {
     private fun isValidEmail(email: String): Boolean {
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\$"
         return email.matches(emailRegex.toRegex())
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(0, 0)
     }
 }

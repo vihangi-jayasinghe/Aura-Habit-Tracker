@@ -13,15 +13,13 @@ object HabitManager {
     private val habits = mutableListOf<Habit>()
     private var isInitialized = false
 
-    // Initialize with context
-    fun initialize(context: Context) {
+     fun initialize(context: Context) {
         if (!isInitialized) {
             loadHabits(context)
             isInitialized = true
         }
     }
 
-    // Add a new habit
     fun addHabit(context: Context, habit: Habit): Boolean {
         return try {
             habits.add(habit)
@@ -32,7 +30,6 @@ object HabitManager {
         }
     }
 
-    // Update an existing habit
     fun updateHabit(context: Context, habitId: String, updatedHabit: Habit): Boolean {
         val index = habits.indexOfFirst { it.id == habitId }
         return if (index != -1) {
@@ -53,12 +50,10 @@ object HabitManager {
         return success
     }
 
-    // Get all habits
     fun getAllHabits(): List<Habit> {
         return habits.toList()
     }
 
-    // Get habits by category
     fun getHabitsByCategory(category: HabitCategory): List<Habit> {
         return if (category == HabitCategory.ALL) {
             getAllHabits()
@@ -67,12 +62,10 @@ object HabitManager {
         }
     }
 
-    // Get habit by ID
     fun getHabitById(habitId: String): Habit? {
         return habits.find { it.id == habitId }
     }
 
-    // Toggle habit completion status
     fun toggleHabitCompletion(context: Context, habitId: String): Boolean {
         val habit = getHabitById(habitId)
         return habit?.let {
@@ -87,7 +80,6 @@ object HabitManager {
         } ?: false
     }
 
-    // Complete all habits for today
     fun completeAllHabits(context: Context): Boolean {
         return try {
             habits.forEach { habit ->
@@ -103,7 +95,6 @@ object HabitManager {
         }
     }
 
-    // Reset all habits completion status for new day
     fun resetDailyHabits(context: Context) {
         val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(
             Date()
@@ -119,7 +110,6 @@ object HabitManager {
         }
     }
 
-    // Get today's progress stats
     fun getTodayProgress(): Triple<Int, Int, Int> {
         val completed = habits.count { it.isCompleted }
         val total = habits.size
@@ -128,12 +118,10 @@ object HabitManager {
         return Triple(completed, total, completionRate)
     }
 
-    // Get habits completion streak (simplified)
     fun getHabitStreak(habitId: String): Int {
         return getHabitById(habitId)?.completedDays ?: 0
     }
 
-    // Search habits by title
     fun searchHabits(query: String): List<Habit> {
         return habits.filter {
             it.title.contains(query, ignoreCase = true) ||
@@ -141,13 +129,11 @@ object HabitManager {
         }
     }
 
-    // Clear all habits (for testing/reset)
     fun clearAllHabits(context: Context) {
         habits.clear()
         saveHabits(context)
     }
 
-    // Private methods for persistence
     private fun saveHabits(context: Context) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val editor = prefs.edit()

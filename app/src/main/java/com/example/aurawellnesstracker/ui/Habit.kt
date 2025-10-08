@@ -170,19 +170,16 @@ class Habit : AppCompatActivity() {
         // Update completion state
         updateCompletionUI(completionCheckbox, habit.isCompleted)
 
-        // Toggle completion
         completionCheckbox.setOnClickListener {
             HabitManager.toggleHabitCompletion(this@Habit, habit.id)
             updateCompletionUI(completionCheckbox, !habit.isCompleted)
             updateUI()
         }
 
-        // Edit button click
         editButton.setOnClickListener {
             editHabit(habit)
         }
 
-        // Long click to edit/delete (keep for accessibility)
         habitItemView.setOnLongClickListener {
             showHabitOptions(habit)
             true
