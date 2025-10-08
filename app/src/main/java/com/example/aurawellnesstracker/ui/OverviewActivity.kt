@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -28,7 +29,21 @@ class OverviewActivity : AppCompatActivity() {
 
         initializeManagers()
         setupBasicCharts()
-        setupBottomNavigation()
+
+        val backButton = findViewById<ImageView>(R.id.backButton)
+        backButton.setOnClickListener {
+            Log.d("OverviewActivity", "Back button clicked")
+            finish()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshData()
+    }
+
+    private fun refreshData() {
+        setupBasicCharts()
     }
 
     private fun initializeManagers() {
@@ -51,13 +66,281 @@ class OverviewActivity : AppCompatActivity() {
         chartLayout.removeAllViews()
         chartLayout.orientation = LinearLayout.VERTICAL
 
+        // Modern mood chart
+        val moodChart = createModernMoodChart(moodData, days)
+        chartLayout.addView(moodChart)
+
         // Overall weekly stats
         val weeklyStats = createWeeklyMoodStats(moodData, days)
         chartLayout.addView(weeklyStats)
+    }
 
-        // Daily mood breakdown
-        val dailyBreakdown = createDailyMoodBreakdown(moodData, days)
-        chartLayout.addView(dailyBreakdown)
+    private fun createModernMoodChart(moodData: List<Float>, days: Array<String>): LinearLayout {
+        return LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, 0, 0, dpToPx(16))
+            }
+
+            // Title
+            val title = TextView(this@OverviewActivity).apply {
+                text = "7-Day Mood Trend"
+                textSize = 18f
+                setTextColor(ContextCompat.getColor(this@OverviewActivity, R.color.text_primary))
+                setTypeface(typeface, Typeface.BOLD)
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(0, 0, 0, dpToPx(16))
+                }
+            }
+            addView(title)
+
+            // Chart container
+            val chartContainer = LinearLayout(this@OverviewActivity).apply {
+                orientation = LinearLayout.VERTICAL
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    dpToPx(200)
+                )
+                setBackgroundResource(R.drawable.white_rounded_background)
+                setPadding(dpToPx(16), dpToPx(16), dpToPx(16), dpToPx(8))
+            }
+
+            // Mood line chart area
+            val chartArea = LinearLayout(this@OverviewActivity).apply {
+                orientation = LinearLayout.HORIZONTAL
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0,
+                    1f
+                )
+                gravity = Gravity.BOTTOM
+            }
+
+            val maxMoodValue = 5f
+            val chartHeight = dpToPx(150)
+
+            days.forEachIndexed { index, day ->
+                val moodValue = moodData[index]
+                chartArea.addView(createMoodChartColumn(day, moodValue, maxMoodValue, chartHeight))
+            }
+
+            chartContainer.addView(chartArea)
+
+            // Single day labels at bottom (no duplicates)
+            val dayLabelsLayout = LinearLayout(this@OverviewActivity).apply {
+                orientation = LinearLayout.HORIZONTAL
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                gravity = Gravity.CENTER_HORIZONTAL
+            }
+
+            days.forEach { day ->
+                val dayLabel = TextView(this@OverviewActivity).apply {
+                    text = day
+                    textSize = 10f
+                    setTextColor(ContextCompat.getColor(this@OverviewActivity, R.color.text_secondary))
+                    layoutParams = LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        1f
+                    )
+                    gravity = Gravity.CENTER
+                }
+                dayLabelsLayout.addView(dayLabel)
+            }
+
+            chartContainer.addView(dayLabelsLayout)
+            addView(chartContainer)
+
+            // Mood legend
+            val legendLayout = createMoodLegend()
+            addView(legendLayout)
+        }
+    }
+
+    private fun createMoodChartColumn(day: String, moodValue: Float, maxValue: Float, chartHeight: Int): LinearLayout {
+        val hasData = moodValue > 0
+        val normalizedHeight = if (hasData) (moodValue / maxValue * chartHeight * 0.8).toInt() else 0
+        val minHeight = dpToPx(4)
+        val actualHeight = maxOf(normalizedHeight, minHeight)
+
+        return LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                1f
+            )
+            gravity = Gravity.BOTTOM
+
+            // Emoji indicator (replaces the number)
+            if (hasData) {
+                val emojiIndicator = TextView(this@OverviewActivity).apply {
+                    text = getMoodEmoji(moodValue)
+                    textSize = 16f
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        gravity = Gravity.CENTER_HORIZONTAL
+                        setMargins(0, 0, 0, dpToPx(4))
+                    }
+                    gravity = Gravity.CENTER
+                }
+                addView(emojiIndicator)
+            } else {
+                // Show a dash for no data
+                val noDataIndicator = TextView(this@OverviewActivity).apply {
+                    text = "—"
+                    textSize = 14f
+                    setTextColor(ContextCompat.getColor(this@OverviewActivity, R.color.text_secondary))
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        gravity = Gravity.CENTER_HORIZONTAL
+                        setMargins(0, 0, 0, dpToPx(4))
+                    }
+                    gravity = Gravity.CENTER
+                }
+                addView(noDataIndicator)
+            }
+
+            // Mood bar with gradient effect
+            val moodBar = LinearLayout(this@OverviewActivity).apply {
+                orientation = LinearLayout.VERTICAL
+                layoutParams = LinearLayout.LayoutParams(
+                    dpToPx(24),
+                    actualHeight
+                ).apply {
+                    setMargins(dpToPx(4), 0, dpToPx(4), 0)
+                }
+                gravity = Gravity.CENTER
+
+                if (hasData) {
+                    // Main bar
+                    val mainBar = View(this@OverviewActivity).apply {
+                        layoutParams = LinearLayout.LayoutParams(
+                            dpToPx(20),
+                            maxOf(actualHeight - dpToPx(8), dpToPx(4))
+                        )
+                        setBackgroundColor(getMoodColor(moodValue))
+                    }
+
+                    // Top rounded cap
+                    val topCap = View(this@OverviewActivity).apply {
+                        layoutParams = LinearLayout.LayoutParams(
+                            dpToPx(16),
+                            dpToPx(4)
+                        ).apply {
+                            setMargins(0, 0, 0, -dpToPx(2))
+                        }
+                        setBackgroundResource(R.drawable.mood_bar_top_cap)
+                        setBackgroundColor(getMoodColor(moodValue))
+                    }
+
+                    addView(mainBar)
+                    if (actualHeight > dpToPx(12)) {
+                        addView(topCap)
+                    }
+                } else {
+                    // Empty state - dotted line
+                    val emptyBar = View(this@OverviewActivity).apply {
+                        layoutParams = LinearLayout.LayoutParams(
+                            dpToPx(16),
+                            dpToPx(4)
+                        )
+                        setBackgroundResource(R.drawable.dotted_line)
+                    }
+                    addView(emptyBar)
+                }
+            }
+
+            addView(moodBar)
+        }
+    }
+
+    private fun createMoodLegend(): LinearLayout {
+        return LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, dpToPx(12), 0, 0)
+            }
+            gravity = Gravity.CENTER
+
+            val moodLevels = listOf(
+                "😞" to "Poor",
+                "😔" to "Low",
+                "😐" to "Neutral",
+                "🙂" to "Good",
+                "😊" to "Excellent"
+            )
+
+            moodLevels.forEach { (emoji, label) ->
+                val legendItem = LinearLayout(this@OverviewActivity).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        setMargins(dpToPx(8), 0, dpToPx(8), 0)
+                    }
+                    gravity = Gravity.CENTER_VERTICAL
+                }
+
+                val emojiView = TextView(this@OverviewActivity).apply {
+                    text = emoji
+                    textSize = 12f
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        setMargins(0, 0, dpToPx(2), 0)
+                    }
+                }
+
+                val labelText = TextView(this@OverviewActivity).apply {
+                    text = label
+                    textSize = 10f
+                    setTextColor(ContextCompat.getColor(this@OverviewActivity, R.color.text_secondary))
+                }
+
+                legendItem.addView(emojiView)
+                legendItem.addView(labelText)
+                addView(legendItem)
+            }
+        }
+    }
+
+    private fun getMoodEmoji(moodValue: Float): String {
+        return when {
+            moodValue >= 4.5 -> "😊" // Excellent
+            moodValue >= 3.5 -> "🙂" // Good
+            moodValue >= 2.5 -> "😐" // Neutral
+            moodValue >= 1.5 -> "😔" // Low
+            else -> "😞" // Poor
+        }
+    }
+
+    private fun getMoodColor(moodValue: Float): Int {
+        return when {
+            moodValue >= 4.5 -> Color.parseColor("#4CAF50") // Green - Excellent
+            moodValue >= 3.5 -> Color.parseColor("#8BC34A") // Light Green - Good
+            moodValue >= 2.5 -> Color.parseColor("#FFC107") // Amber - Neutral
+            moodValue >= 1.5 -> Color.parseColor("#FF9800") // Orange - Low
+            else -> Color.parseColor("#F44336") // Red - Poor
+        }
     }
 
     private fun createWeeklyMoodStats(moodData: List<Float>, days: Array<String>): LinearLayout {
@@ -73,13 +356,13 @@ class OverviewActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                setMargins(0, 0, 0, dpToPx(16))
+                setMargins(0, dpToPx(24), 0, 0)
             }
 
             // Title
             val title = TextView(this@OverviewActivity).apply {
-                text = "Weekly Mood Summary"
-                textSize = 18f
+                text = "Weekly Summary"
+                textSize = 16f
                 setTextColor(ContextCompat.getColor(this@OverviewActivity, R.color.text_primary))
                 setTypeface(typeface, Typeface.BOLD)
                 layoutParams = LinearLayout.LayoutParams(
@@ -116,7 +399,7 @@ class OverviewActivity : AppCompatActivity() {
                 "Average Mood",
                 getMoodDescription(averageMood.toFloat()),
                 getMoodEmoji(averageMood.toFloat()),
-                Color.parseColor("#06D6A0")
+                getMoodColor(averageMood.toFloat())
             ))
 
             // Tracked Days
@@ -124,7 +407,7 @@ class OverviewActivity : AppCompatActivity() {
                 "Tracked Days",
                 "$moodDays/7 days",
                 "📅",
-                Color.parseColor("#118AB2")
+                Color.parseColor("#2196F3")
             ))
 
             // Right Column
@@ -160,102 +443,6 @@ class OverviewActivity : AppCompatActivity() {
             statsGrid.addView(leftColumn)
             statsGrid.addView(rightColumn)
             addView(statsGrid)
-        }
-    }
-
-    private fun createDailyMoodBreakdown(moodData: List<Float>, days: Array<String>): LinearLayout {
-        return LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-            // Title
-            val title = TextView(this@OverviewActivity).apply {
-                text = "Daily Mood Breakdown"
-                textSize = 16f
-                setTextColor(ContextCompat.getColor(this@OverviewActivity, R.color.text_primary))
-                setTypeface(typeface, Typeface.BOLD)
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(0, dpToPx(16), 0, dpToPx(12))
-                }
-            }
-            addView(title)
-
-            // Daily items
-            days.forEachIndexed { index, day ->
-                val moodValue = moodData[index]
-                addView(createDailyMoodItem(day, moodValue))
-            }
-        }
-    }
-
-    private fun createDailyMoodItem(day: String, moodValue: Float): LinearLayout {
-        return LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(0, 0, 0, dpToPx(8))
-            }
-            gravity = Gravity.CENTER_VERTICAL
-
-            // Day
-            val dayText = TextView(this@OverviewActivity).apply {
-                text = day
-                textSize = 14f
-                setTextColor(ContextCompat.getColor(this@OverviewActivity, R.color.text_primary))
-                layoutParams = LinearLayout.LayoutParams(
-                    dpToPx(60),
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-            }
-            addView(dayText)
-
-            // Mood indicator
-            val moodIndicator = TextView(this@OverviewActivity).apply {
-                text = if (moodValue > 0) getMoodEmoji(moodValue) else "—"
-                textSize = 16f
-                layoutParams = LinearLayout.LayoutParams(
-                    dpToPx(40),
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                gravity = Gravity.CENTER
-            }
-            addView(moodIndicator)
-
-            // Mood description
-            val moodDesc = TextView(this@OverviewActivity).apply {
-                text = if (moodValue > 0) getMoodDescription(moodValue) else "No entry"
-                textSize = 14f
-                setTextColor(ContextCompat.getColor(this@OverviewActivity,
-                    if (moodValue > 0) R.color.text_secondary else R.color.text_secondary))
-                layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
-            }
-            addView(moodDesc)
-
-            // Mood value
-            val valueText = TextView(this@OverviewActivity).apply {
-                text = if (moodValue > 0) String.format("%.1f", moodValue) else "—"
-                textSize = 14f
-                setTextColor(ContextCompat.getColor(this@OverviewActivity, R.color.text_primary))
-                setTypeface(typeface, Typeface.BOLD)
-                layoutParams = LinearLayout.LayoutParams(
-                    dpToPx(40),
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                gravity = Gravity.END
-            }
-            addView(valueText)
         }
     }
 
@@ -320,16 +507,6 @@ class OverviewActivity : AppCompatActivity() {
 
             addView(topRow)
             addView(titleView)
-        }
-    }
-
-    private fun getMoodEmoji(moodValue: Float): String {
-        return when {
-            moodValue >= 4.5 -> "😊"
-            moodValue >= 3.5 -> "🙂"
-            moodValue >= 2.5 -> "😐"
-            moodValue >= 1.5 -> "😔"
-            else -> "😞"
         }
     }
 
@@ -761,28 +938,5 @@ class OverviewActivity : AppCompatActivity() {
 
     private fun dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
-    }
-
-    private fun setupBottomNavigation() {
-        findViewById<ImageView>(R.id.homeBtn10).setOnClickListener {
-            startActivity(Intent(this, Home::class.java))
-            overridePendingTransition(0, 0)
-        }
-        findViewById<ImageView>(R.id.productBtn10).setOnClickListener {
-            startActivity(Intent(this, Mood::class.java))
-            overridePendingTransition(0, 0)
-        }
-        findViewById<ImageView>(R.id.expertsBtn10).setOnClickListener {
-            startActivity(Intent(this, Habit::class.java))
-            overridePendingTransition(0, 0)
-        }
-        findViewById<ImageView>(R.id.profileBtn10).setOnClickListener {
-            startActivity(Intent(this, Hydration::class.java))
-            overridePendingTransition(0, 0)
-        }
-        findViewById<ImageView>(R.id.profileBtn11).setOnClickListener {
-            startActivity(Intent(this, Settings::class.java))
-            overridePendingTransition(0, 0)
-        }
     }
 }

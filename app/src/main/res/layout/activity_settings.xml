@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:letterSpacing="0.02"
-                android:text="Settings"
+                android:text="@string/settings1"
                 android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="4dp"
-                android:text="Customize your wellness experience"
+                android:text="@string/settings2"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +90,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Account Settings"
+                            android:text="@string/settings3"
                             android:textColor="@color/text_primary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -122,7 +122,7 @@
                                 android:id="@+id/userNameText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="John Doe"
+                                android:text="@string/settings4"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -131,7 +131,7 @@
                                 android:id="@+id/userEmailText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="john.doe@example.com"
+                                android:text="@string/settings5"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -140,7 +140,7 @@
                             android:id="@+id/editProfileButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
-                            android:text="Edit"
+                            android:text="@string/settings6"
                             android:textSize="12sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="18dp" />
@@ -213,7 +213,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Push Notifications"
+                                android:text="@string/settings7"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp" />
 
@@ -236,7 +236,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Mood Reminders"
+                                android:text="@string/settings8"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp" />
 
@@ -259,7 +259,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Hydration Reminders"
+                                android:text="@string/settings9"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp" />
 
@@ -282,7 +282,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Habit Reminders"
+                                android:text="@string/settings10"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp" />
 
@@ -298,9 +298,9 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- App Preferences Card -->
+            <!-- Support Card -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/preferencesCard"
+                android:id="@+id/supportCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -331,154 +331,13 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="12dp"
-                            android:src="@drawable/ic_preferences"
-                            app:tint="@color/primary_color" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="App Preferences"
-                            android:textColor="@color/text_primary"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- Theme Setting -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Theme"
-                            android:textColor="@color/text_primary"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="8dp" />
-
-                        <Spinner
-                            android:id="@+id/themeSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@drawable/white_rounded_background"
-                            android:paddingStart="16dp"
-                            android:paddingEnd="16dp" />
-                    </LinearLayout>
-
-                    <!-- Daily Goals -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Daily Goals"
-                            android:textColor="@color/text_primary"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="8dp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:paddingVertical="8dp">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Default Water Goal"
-                                android:textColor="@color/text_primary"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/waterGoalText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2.0L"
-                                android:textColor="@color/primary_color"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:paddingVertical="8px">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Daily Habit Goal"
-                                android:textColor="@color/text_primary"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/habitGoalText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="5 habits"
-                                android:textColor="@color/primary_color"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Support Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/supportCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:cardBackgroundColor="@color/card_background"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/preferencesCard"
-                app:strokeColor="@color/card_stroke"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="24dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_support"
                             app:tint="@color/primary_color" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Support"
+                            android:text="@string/settings11"
                             android:textColor="@color/text_primary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -496,7 +355,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginBottom="8dp"
-                            android:text="Help and FAQ"
+                            android:text="@string/settings12"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="12dp"
@@ -509,7 +368,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginBottom="8dp"
-                            android:text="Contact Support"
+                            android:text="@string/settings13"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="12dp"
@@ -522,7 +381,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginBottom="8dp"
-                            android:text="Privacy Policy"
+                            android:text="@string/settings14"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="12dp"
@@ -534,7 +393,7 @@
                             android:id="@+id/termsButton"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:text="Terms of Service"
+                            android:text="@string/settings15"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="12dp"
@@ -574,7 +433,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="App Information"
+                        android:text="@string/settings16"
                         android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -596,7 +455,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="App Version"
+                                android:text="@string/settings17"
                                 android:textColor="@color/text_primary"
                                 android:textSize="14sp" />
 
@@ -604,7 +463,7 @@
                                 android:id="@+id/appVersionText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1.0.0"
+                                android:text="@string/settings18"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -620,7 +479,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Build Date"
+                                android:text="@string/settings19"
                                 android:textColor="@color/text_primary"
                                 android:textSize="14sp" />
 
@@ -628,7 +487,7 @@
                                 android:id="@+id/buildDateText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="September 2025"
+                                android:text="@string/settings20"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -640,7 +499,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="16dp"
-                        android:text="Log Out"
+                        android:text="@string/settings21"
                         android:textSize="16sp" />
 
                 </LinearLayout>

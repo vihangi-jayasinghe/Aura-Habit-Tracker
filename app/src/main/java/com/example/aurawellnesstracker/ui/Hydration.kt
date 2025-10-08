@@ -19,6 +19,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.util.*
+import android.graphics.Color
 
 class Hydration : AppCompatActivity() {
     private lateinit var hydrationManager: HydrationManager
@@ -332,6 +333,11 @@ class Hydration : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
+        val hydrationBtn = findViewById<ImageView>(R.id.profileBtn10)
+
+        // Set hydration icon to blue
+        hydrationBtn.setColorFilter(ContextCompat.getColor(this, R.color.primary_color))
+
         findViewById<ImageView>(R.id.homeBtn10).setOnClickListener {
             val intent = Intent(this, Home::class.java)
             startActivity(intent)
@@ -353,7 +359,7 @@ class Hydration : AppCompatActivity() {
             overridePendingTransition(0, 0)
         }
 
-        findViewById<ImageView>(R.id.profileBtn10).setOnClickListener {
+        hydrationBtn.setOnClickListener {
             // Already on hydration page, refresh
             loadTodayWaterData()
         }

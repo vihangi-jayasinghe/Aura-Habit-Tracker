@@ -16,6 +16,7 @@ import com.example.aurawellnesstracker.utils.MoodManager
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.content.ContextCompat
 
 class Mood : AppCompatActivity() {
 
@@ -222,12 +223,17 @@ class Mood : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
+        val moodBtn = findViewById<ImageView>(R.id.productBtn10)
+
+        // Set mood icon to blue
+        moodBtn.setColorFilter(ContextCompat.getColor(this, R.color.primary_color))
+
         findViewById<ImageView>(R.id.homeBtn10).setOnClickListener {
             val intent = Intent(this, Home::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0)
         }
-        findViewById<ImageView>(R.id.productBtn10).setOnClickListener {
+        moodBtn.setOnClickListener {
             val intent = Intent(this, Mood::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0)

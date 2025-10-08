@@ -2,12 +2,12 @@ package com.example.aurawellnesstracker.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.aurawellnesstracker.R
@@ -25,9 +25,6 @@ class Settings : AppCompatActivity() {
     private lateinit var userNameText: TextView
     private lateinit var userEmailText: TextView
     private lateinit var editProfileButton: MaterialButton
-    private lateinit var themeSpinner: Spinner
-    private lateinit var waterGoalText: TextView
-    private lateinit var habitGoalText: TextView
     private lateinit var appVersionText: TextView
     private lateinit var buildDateText: TextView
     private lateinit var logoutButton: Button
@@ -52,11 +49,9 @@ class Settings : AppCompatActivity() {
         initializeViews()
         setupBottomNavigation()
         setupUserDetails()
-        setupThemeSpinner()
         setupNotificationSwitches()
         setupAppInfo()
         setupSupportButtons()
-        setupDailyGoals()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -69,16 +64,12 @@ class Settings : AppCompatActivity() {
         super.onResume()
         // Refresh user details when returning to settings
         setupUserDetails()
-        updateDailyGoalsDisplay()
     }
 
     private fun initializeViews() {
         userNameText = findViewById(R.id.userNameText)
         userEmailText = findViewById(R.id.userEmailText)
         editProfileButton = findViewById(R.id.editProfileButton)
-        themeSpinner = findViewById(R.id.themeSpinner)
-        waterGoalText = findViewById(R.id.waterGoalText)
-        habitGoalText = findViewById(R.id.habitGoalText)
         appVersionText = findViewById(R.id.appVersionText)
         buildDateText = findViewById(R.id.buildDateText)
         logoutButton = findViewById(R.id.logoutButton)
@@ -192,43 +183,6 @@ class Settings : AppCompatActivity() {
         return email.matches(emailRegex.toRegex())
     }
 
-    private fun setupThemeSpinner() {
-        val themes = arrayOf("System Default", "Light", "Dark")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, themes)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        themeSpinner.adapter = adapter
-
-        // Set current theme
-        val currentTheme = sharedPreferences.getInt("app_theme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        val themePosition = when (currentTheme) {
-            AppCompatDelegate.MODE_NIGHT_NO -> 1 // Light
-            AppCompatDelegate.MODE_NIGHT_YES -> 2 // Dark
-            else -> 0 // System Default
-        }
-        themeSpinner.setSelection(themePosition)
-
-        themeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
-                val selectedTheme = when (position) {
-                    1 -> AppCompatDelegate.MODE_NIGHT_NO
-                    2 -> AppCompatDelegate.MODE_NIGHT_YES
-                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                }
-
-                if (selectedTheme != currentTheme) {
-                    with(sharedPreferences.edit()) {
-                        putInt("app_theme", selectedTheme)
-                        apply()
-                    }
-                    AppCompatDelegate.setDefaultNightMode(selectedTheme)
-                    recreate() // Restart activity to apply theme
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-    }
-
     private fun setupNotificationSwitches() {
         // Load saved notification preferences
         pushNotificationsSwitch.isChecked = sharedPreferences.getBoolean("push_notifications", true)
@@ -261,79 +215,6 @@ class Settings : AppCompatActivity() {
     private fun showNotificationToast(type: String, enabled: Boolean) {
         val status = if (enabled) "enabled" else "disabled"
         Toast.makeText(this, "$type $status", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun setupDailyGoals() {
-        // Set up click listeners for daily goals to allow editing
-        waterGoalText.setOnClickListener {
-            showWaterGoalDialog()
-        }
-
-        habitGoalText.setOnClickListener {
-            showHabitGoalDialog()
-        }
-
-        updateDailyGoalsDisplay()
-    }
-
-    private fun showWaterGoalDialog() {
-        val currentGoal = sharedPreferences.getFloat("daily_water_goal", 2.0f)
-        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_goal, null)
-        val goalEditText = dialogView.findViewById<EditText>(R.id.goalEditText)
-        val goalUnitText = dialogView.findViewById<TextView>(R.id.goalUnitText)
-
-        goalEditText.setText(currentGoal.toString())
-        goalUnitText.text = "Liters"
-
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Set Water Goal")
-            .setView(dialogView)
-            .setPositiveButton("Save") { _, _ ->
-                val newGoal = goalEditText.text.toString().toFloatOrNull()
-                if (newGoal != null && newGoal > 0) {
-                    sharedPreferences.edit().putFloat("daily_water_goal", newGoal).apply()
-                    updateDailyGoalsDisplay()
-                    Toast.makeText(this, "Water goal updated to ${newGoal}L", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Please enter a valid water goal", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
-    private fun showHabitGoalDialog() {
-        val currentGoal = sharedPreferences.getInt("daily_habit_goal", 5)
-        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_goal, null)
-        val goalEditText = dialogView.findViewById<EditText>(R.id.goalEditText)
-        val goalUnitText = dialogView.findViewById<TextView>(R.id.goalUnitText)
-
-        goalEditText.setText(currentGoal.toString())
-        goalUnitText.text = "Habits"
-
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Set Habit Goal")
-            .setView(dialogView)
-            .setPositiveButton("Save") { _, _ ->
-                val newGoal = goalEditText.text.toString().toIntOrNull()
-                if (newGoal != null && newGoal > 0) {
-                    sharedPreferences.edit().putInt("daily_habit_goal", newGoal).apply()
-                    updateDailyGoalsDisplay()
-                    Toast.makeText(this, "Habit goal updated to $newGoal habits", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Please enter a valid habit goal", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
-    private fun updateDailyGoalsDisplay() {
-        val waterGoal = sharedPreferences.getFloat("daily_water_goal", 2.0f)
-        val habitGoal = sharedPreferences.getInt("daily_habit_goal", 5)
-
-        waterGoalText.text = String.format("%.1fL", waterGoal)
-        habitGoalText.text = "$habitGoal habits"
     }
 
     private fun setupAppInfo() {
@@ -418,6 +299,11 @@ class Settings : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
+        val settingsBtn = findViewById<ImageView>(R.id.profileBtn11)
+
+        // Set settings icon to blue
+        settingsBtn.setColorFilter(ContextCompat.getColor(this, R.color.primary_color))
+
         findViewById<ImageView>(R.id.homeBtn10).setOnClickListener {
             val intent = Intent(this, Home::class.java)
             startActivity(intent)
@@ -438,7 +324,7 @@ class Settings : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(0, 0)
         }
-        findViewById<ImageView>(R.id.profileBtn11).setOnClickListener {
+        settingsBtn.setOnClickListener {
             val intent = Intent(this, Settings::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0)

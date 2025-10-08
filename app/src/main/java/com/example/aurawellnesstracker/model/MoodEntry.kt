@@ -38,18 +38,9 @@ data class MoodEntry(
             }
         }
 
+        // This method is no longer used but kept for compatibility
         fun getColorForMood(moodType: String): String {
-            return when (moodType) {
-                MOOD_EXCELLENT -> "#118AB2"
-                MOOD_GOOD -> "#06D6A0"
-                MOOD_NEUTRAL -> "#FFD166"
-                MOOD_LOW -> "#FFA726"
-                MOOD_ANXIOUS -> "#F44336"
-                MOOD_TIRED -> "#9C27B0"
-                MOOD_FRUSTRATED -> "#FF9800"
-                MOOD_LOVED -> "#4CAF50"
-                else -> "#666666"
-            }
+            return "#6750A4" // Return primary color for all moods
         }
     }
 }

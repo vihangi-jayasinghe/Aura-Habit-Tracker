@@ -23,7 +23,7 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add New Habit"
+                android:text="@string/addEditHabit1"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Create a new habit to track your wellness journey"
+                android:text="@string/addEditHabit2"
                 android:textSize="16sp"
                 android:textColor="@color/text_secondary"
                 android:lineSpacingExtra="4dp" />
@@ -75,7 +75,7 @@
                         android:id="@+id/titleEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Habit Title"
+                        android:hint="@string/addEditHabit3"
                         android:textSize="16sp"
                         android:maxLines="1"
                         android:paddingVertical="16dp" />
@@ -101,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:gravity="top"
-                        android:hint="Description (Optional)"
+                        android:hint="@string/addEditHabit4"
                         android:textSize="16sp"
                         android:inputType="textMultiLine"
                         android:maxLines="5"
@@ -113,7 +113,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Category"
+                    android:text="@string/addEditHabit5"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -150,10 +150,10 @@
                         android:id="@+id/targetDaysEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Target Days"
+                        android:hint="@string/addEditHabit6"
                         android:textSize="16sp"
                         android:inputType="number"
-                        android:text="7"
+                        android:text="@string/addEditHabit7"
                         android:paddingVertical="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -177,7 +177,7 @@
                         android:id="@+id/reminderTimeEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Reminder Time (Optional)"
+                        android:hint="@string/addEditHabit8"
                         android:textSize="16sp"
                         android:focusable="false"
                         android:clickable="true"
@@ -188,7 +188,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Set a daily reminder to help build your habit"
+                    android:text="@string/addEditHabit9"
                     android:textSize="12sp"
                     android:textColor="@color/text_secondary"
                     android:layout_marginBottom="20dp" />
@@ -209,7 +209,7 @@
                 android:layout_height="56dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="12dp"
-                android:text="Cancel"
+                android:text="@string/addEditHabit10"
                 android:textSize="16sp"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 app:cornerRadius="16dp"
@@ -222,7 +222,7 @@
                 android:layout_height="56dp"
                 android:layout_weight="1"
                 android:layout_marginStart="12dp"
-                android:text="Save"
+                android:text="@string/addEditHabit11"
                 android:textSize="16sp"
                 app:cornerRadius="16dp"
                 app:iconGravity="textStart"
@@ -236,7 +236,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="16dp"
-            android:text="Delete Habit"
+            android:text="@string/addEditHabit12"
             android:textSize="16sp"
             style="@style/Widget.Material3.Button.OutlinedButton"
             app:cornerRadius="16dp"

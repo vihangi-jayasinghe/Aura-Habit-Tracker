@@ -61,7 +61,9 @@ class Signin : AppCompatActivity() {
         // Forgot Password
         val forgotPasswordText = findViewById<TextView>(R.id.forgotPasswordText)
         forgotPasswordText.setOnClickListener {
-            Toast.makeText(this, "Forgot Password feature coming soon!", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ForgotPassword::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
         }
     }
 

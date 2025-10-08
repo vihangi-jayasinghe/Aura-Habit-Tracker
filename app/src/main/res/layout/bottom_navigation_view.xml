@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:background="@drawable/rounded_textinput">
+    android:background="@drawable/rounded_textinput"
+    android:backgroundTint="#FFFFFF"
+    android:elevation="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/rounded_textinput"
+        android:backgroundTint="#FFFFFF"
         android:orientation="horizontal"
         android:weightSum="5"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,6 +29,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="@string/bottom"
+            android:tint="#666666"
             app:srcCompat="@drawable/ic_home"
             tools:ignore="ImageContrastCheck" />
 
@@ -38,6 +42,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="@string/bottom1"
+            android:tint="#666666"
             app:srcCompat="@drawable/ic_mood_happy"
             tools:ignore="ImageContrastCheck" />
 
@@ -50,6 +55,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="@string/bottom2"
+            android:tint="#666666"
             app:srcCompat="@drawable/ic_habits"
             tools:ignore="ImageContrastCheck" />
 
@@ -62,6 +68,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="@string/bottom3"
+            android:tint="#666666"
             app:srcCompat="@drawable/ic_water"
             tools:ignore="ImageContrastCheck" />
 
@@ -74,6 +81,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="@string/bottom4"
+            android:tint="#666666"
             app:srcCompat="@drawable/ic_settings"
             tools:ignore="ImageContrastCheck" />
     </LinearLayout>

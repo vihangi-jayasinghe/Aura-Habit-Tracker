@@ -13,24 +13,41 @@
         android:layout_height="0dp"
         android:background="@color/material_dynamic_primary95"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="16dp">
 
+            <!-- Back Button -->
+
             <!-- Header Section -->
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="28dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="12dp"
+                android:src="?attr/homeAsUpIndicator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text_primary" />
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:letterSpacing="0.02"
-                android:text="Progress Overview"
+                android:text="@string/overview1"
                 android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold"
@@ -44,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="4dp"
-                android:text="Track your wellness trends and progress"
+                android:text="@string/overview2"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +107,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mood Trends"
+                            android:text="@string/overview3"
                             android:textColor="@color/text_primary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -151,7 +168,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hydration Trends"
+                            android:text="@string/overview4"
                             android:textColor="@color/text_primary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -215,7 +232,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Habits Progress"
+                            android:text="@string/overview5"
                             android:textColor="@color/text_primary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -239,15 +256,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <!-- Bottom Navigation -->
-    <include
-        android:id="@+id/bottomNavigation"
-        layout="@layout/bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

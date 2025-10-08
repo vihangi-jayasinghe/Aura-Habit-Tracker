@@ -254,6 +254,11 @@ class Habit : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
+        val habitBtn = findViewById<ImageView>(R.id.expertsBtn10)
+
+        // Set habit icon to blue
+        habitBtn.setColorFilter(ContextCompat.getColor(this, R.color.primary_color))
+
         findViewById<ImageView>(R.id.homeBtn10).setOnClickListener {
             val intent = Intent(this, Home::class.java)
             startActivity(intent)
@@ -264,7 +269,7 @@ class Habit : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(0, 0)
         }
-        findViewById<ImageView>(R.id.expertsBtn10).setOnClickListener {
+        habitBtn.setOnClickListener {
             val intent = Intent(this, Habit::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0)

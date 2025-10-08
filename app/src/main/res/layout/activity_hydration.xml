@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:letterSpacing="0.02"
-                android:text="Hydration Tracker"
+                android:text="@string/hydration1"
                 android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="4dp"
-                android:text="Stay hydrated and track your daily water intake"
+                android:text="@string/hydration2"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +90,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Today's Hydration"
+                            android:text="@string/hydration3"
                             android:textColor="@color/text_primary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -101,7 +101,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="September 30, 2025"
+                            android:text="@string/hydration4"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -140,7 +140,7 @@
                                     android:id="@+id/currentWaterIntake"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="1.3"
+                                    android:text="@string/hydration5"
                                     android:textColor="@color/text_primary"
                                     android:textSize="28sp"
                                     android:textStyle="bold" />
@@ -148,7 +148,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Liters"
+                                    android:text="@string/hydration6"
                                     android:textColor="@color/text_secondary"
                                     android:textSize="14sp" />
 
@@ -157,7 +157,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text="of 2.0L goal"
+                                    android:text="@string/hydration7"
                                     android:textColor="@color/text_secondary"
                                     android:textSize="12sp" />
                             </LinearLayout>
@@ -173,7 +173,7 @@
                         android:background="@drawable/pill_background"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="8dp"
-                        android:text="65% Completed"
+                        android:text="@string/hydration8"
                         android:textColor="@color/primary_color"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -207,7 +207,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Quick Add Water"
+                        android:text="@string/hydration9"
                         android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -227,7 +227,7 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"
-                            android:text="250ml"
+                            android:text="@string/hydration10"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="12dp" />
@@ -239,7 +239,7 @@
                             android:layout_weight="1"
                             android:layout_marginStart="4dp"
                             android:layout_marginEnd="4dp"
-                            android:text="500ml"
+                            android:text="@string/hydration11"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="12dp" />
@@ -250,7 +250,7 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:layout_marginStart="8dp"
-                            android:text="1000ml"
+                            android:text="@string/hydration12"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             app:cornerRadius="12dp" />
@@ -270,7 +270,7 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"
-                            android:hint="Custom amount (ml)"
+                            android:hint="@string/hydration13"
                             android:inputType="number"
                             android:maxLines="1"
                             android:background="@drawable/white_rounded_background"
@@ -282,7 +282,7 @@
                             android:id="@+id/addCustomWater"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
-                            android:text="Add"
+                            android:text="@string/hydration24"
                             android:textSize="14sp"
                             style="@style/Widget.Material3.Button"
                             app:cornerRadius="12dp" />
@@ -318,7 +318,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Today's History"
+                        android:text="@string/hydration14"
                         android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -330,7 +330,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:padding="40dp"
-                        android:text="No water entries yet today.\nStart by adding some water!"
+                        android:text="@string/hydration15"
                         android:textColor="@color/text_secondary"
                         android:textSize="16sp" />
 
@@ -374,7 +374,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hydration Settings"
+                        android:text="@string/hydration16"
                         android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -390,7 +390,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Daily Water Goal"
+                            android:text="@string/hydration17"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -405,7 +405,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1.0L"
+                                android:text="@string/hydration18"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="14sp" />
 
@@ -422,7 +422,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="4.0L"
+                                android:text="@string/hydration19"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="14sp" />
 
@@ -437,7 +437,7 @@
                             android:background="@drawable/pill_background"
                             android:paddingHorizontal="16dp"
                             android:paddingVertical="8dp"
-                            android:text="2.0L"
+                            android:text="@string/hydration20"
                             android:textColor="@color/primary_color"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -453,7 +453,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Reminders"
+                            android:text="@string/hydration21"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -469,7 +469,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Enable Hydration Reminders"
+                                android:text="@string/hydration22"
                                 android:textColor="@color/text_primary"
                                 android:textSize="14sp" />
 
@@ -491,7 +491,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Reminder Interval"
+                                android:text="@string/hydration23"
                                 android:textColor="@color/text_primary"
                                 android:textSize="14sp" />
 
