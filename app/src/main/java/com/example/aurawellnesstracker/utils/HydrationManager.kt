@@ -24,7 +24,6 @@ class HydrationManager(context: Context) {
     }
 
     init {
-        // Schedule reminders if they're enabled - use exact timing
         if (isReminderEnabled()) {
             val interval = getReminderInterval()
             Log.d("HydrationManager", "Initializing with reminders enabled, interval: $interval minutes")
@@ -35,7 +34,6 @@ class HydrationManager(context: Context) {
         }
     }
 
-    // Add water entry
     fun addWaterEntry(entry: WaterEntry): Boolean {
         try {
             val allEntries = getAllWaterEntries().toMutableList()
@@ -49,7 +47,6 @@ class HydrationManager(context: Context) {
         }
     }
 
-    // Get all water entries
     fun getAllWaterEntries(): List<WaterEntry> {
         return try {
             val entriesJson = sharedPreferences.getString(KEY_WATER_ENTRIES, null)
@@ -64,7 +61,6 @@ class HydrationManager(context: Context) {
         }
     }
 
-    // Get today's water entries
     fun getTodayWaterEntries(): List<WaterEntry> {
         val today = System.currentTimeMillis()
         val calendar = Calendar.getInstance().apply {
@@ -84,13 +80,11 @@ class HydrationManager(context: Context) {
         }
     }
 
-    // Get weekly water data (last 7 days including today)
     fun getWeeklyWaterData(): List<DailyWaterData> {
         val calendar = Calendar.getInstance()
         val weeklyData = mutableListOf<DailyWaterData>()
 
-        // Get data for last 7 days
-        for (i in 6 downTo 0) {
+       for (i in 6 downTo 0) {
             val currentCalendar = Calendar.getInstance()
             currentCalendar.add(Calendar.DAY_OF_MONTH, -i)
 
@@ -138,13 +132,10 @@ class HydrationManager(context: Context) {
 
         return weeklyData
     }
-
-    // Get today's total water intake
     fun getTodayTotalWater(): Int {
         return getTodayWaterEntries().sumOf { it.amount }
     }
 
-    // Delete water entry
     fun deleteWaterEntry(entryId: String): Boolean {
         try {
             val allEntries = getAllWaterEntries().toMutableList()
@@ -158,17 +149,14 @@ class HydrationManager(context: Context) {
         }
     }
 
-    // Set daily water goal
     fun setDailyGoal(goal: Int): Boolean {
         return editor.putInt(KEY_DAILY_GOAL, goal).commit()
     }
 
-    // Get daily water goal
     fun getDailyGoal(): Int {
         return sharedPreferences.getInt(KEY_DAILY_GOAL, DEFAULT_GOAL)
     }
 
-    // Set reminder enabled
     fun setReminderEnabled(enabled: Boolean): Boolean {
         val success = editor.putBoolean(KEY_REMINDER_ENABLED, enabled).commit()
         if (success) {
@@ -179,12 +167,10 @@ class HydrationManager(context: Context) {
         return success
     }
 
-    // Get reminder enabled
     fun isReminderEnabled(): Boolean {
         return sharedPreferences.getBoolean(KEY_REMINDER_ENABLED, true)
     }
 
-    // Set reminder interval
     fun setReminderInterval(interval: Int): Boolean {
         val success = editor.putInt(KEY_REMINDER_INTERVAL, interval).commit()
         if (success) {
@@ -196,12 +182,10 @@ class HydrationManager(context: Context) {
         return success
     }
 
-    // Get reminder interval
     fun getReminderInterval(): Int {
         return sharedPreferences.getInt(KEY_REMINDER_INTERVAL, 10)
     }
 
-    // Get completion percentage
     fun getCompletionPercentage(): Int {
         val todayTotal = getTodayTotalWater()
         val goal = getDailyGoal()
@@ -213,7 +197,6 @@ class HydrationManager(context: Context) {
     }
 }
 
-// Define DailyWaterData class in the same file
 data class DailyWaterData(
     val dayName: String,
     val totalWater: Int,

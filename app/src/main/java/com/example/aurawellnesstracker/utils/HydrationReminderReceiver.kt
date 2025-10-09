@@ -14,13 +14,11 @@ class HydrationReminderReceiver : BroadcastReceiver() {
             ReminderScheduler.REMINDER_ACTION -> {
                 val intervalMinutes = intent.getIntExtra(ReminderScheduler.EXTRA_INTERVAL, 15)
 
-                // Show notification
                 val hydrationManager = HydrationManager(context)
                 if (hydrationManager.isReminderEnabled()) {
                     Log.d("HydrationReminder", "Showing notification for interval: $intervalMinutes minutes")
                     NotificationHelper(context).showHydrationReminder()
 
-                    // Reschedule the next reminder only if still enabled
                     if (hydrationManager.isReminderEnabled()) {
                         ReminderScheduler(context).scheduleReminder(intervalMinutes)
                     }

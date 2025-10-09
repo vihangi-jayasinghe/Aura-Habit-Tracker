@@ -24,14 +24,12 @@ class HydrationReminderWorker(
         Log.d("HydrationReminder", "Settings - Enabled: $isEnabled, Interval: $interval minutes")
         Log.d("HydrationReminder", "Today's total water: ${hydrationManager.getTodayTotalWater()}ml")
 
-        // Only show notification if reminders are enabled
         if (isEnabled) {
             Log.d("HydrationReminder", "Showing notification...")
             NotificationHelper(applicationContext).showHydrationReminder()
             Log.d("HydrationReminder", "Notification shown successfully")
         } else {
             Log.d("HydrationReminder", "Reminders disabled, skipping notification")
-            // Cancel the work if reminders are disabled
             ReminderScheduler(applicationContext).cancelReminder()
         }
 

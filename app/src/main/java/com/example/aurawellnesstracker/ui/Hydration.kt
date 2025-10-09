@@ -75,7 +75,6 @@ class Hydration : AppCompatActivity() {
     }
 
     private fun setupButtonListeners() {
-        // Quick add water buttons
         findViewById<MaterialButton>(R.id.waterSmall).setOnClickListener {
             addWater(250)
         }
@@ -88,12 +87,10 @@ class Hydration : AppCompatActivity() {
             addWater(1000)
         }
 
-        // Custom water amount
         findViewById<MaterialButton>(R.id.addCustomWater).setOnClickListener {
             addCustomWater()
         }
 
-        // Goal seekbar listener
         waterGoalSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
@@ -107,7 +104,6 @@ class Hydration : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        // Reminder switch
         reminderSwitch.setOnCheckedChangeListener { _, isChecked ->
             hydrationManager.setReminderEnabled(isChecked)
             val message = if (isChecked) {
@@ -151,26 +147,20 @@ class Hydration : AppCompatActivity() {
         val goal = hydrationManager.getDailyGoal()
         val percentage = hydrationManager.getCompletionPercentage()
 
-        // Update progress
         hydrationProgress.progress = percentage
         currentWaterIntake.text = String.format("%.1f", todayTotal / 1000.0)
         currentGoalText.text = String.format("%.1fL", goal / 1000.0)
 
-        // Update progress text
         progressText.text = "$percentage% Completed"
 
-        // Update goal info text dynamically
         updateGoalInfoText(goal)
 
-        // Load water history
         loadWaterHistory()
 
-        // Update goal seekbar
         waterGoalSeekBar.progress = (goal / 100) - 10
     }
 
     private fun updateGoalInfoText(goal: Int) {
-        // Find the goal info text view in the circular progress layout
         val circularProgressLayout = findViewById<RelativeLayout>(R.id.circularProgressLayout)
         val goalInfoText = circularProgressLayout?.findViewById<TextView>(R.id.goalInfoText)
 
@@ -222,16 +212,13 @@ class Hydration : AppCompatActivity() {
     }
 
     private fun setupReminderSettings() {
-        // Set initial switch state
         reminderSwitch.isChecked = hydrationManager.isReminderEnabled()
 
-        // Setup reminder interval spinner
         val intervals = arrayOf("5 minutes", "10 minutes", "20 minutes", "1 hour")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, intervals)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         reminderIntervalSpinner.adapter = adapter
 
-        // Set current interval
         val currentInterval = hydrationManager.getReminderInterval()
         val position = when (currentInterval) {
             5 -> 0
@@ -253,7 +240,6 @@ class Hydration : AppCompatActivity() {
                 }
                 hydrationManager.setReminderInterval(interval)
 
-                // Show confirmation toast
                 val intervalText = intervals[position]
                 Toast.makeText(this@Hydration,
                     "Reminders set to $intervalText",
@@ -286,19 +272,16 @@ class Hydration : AppCompatActivity() {
                     this,
                     android.Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED -> {
-                    // Permission already granted
-                    Log.d("Notification", "Notification permission granted")
+                     Log.d("Notification", "Notification permission granted")
                 }
                 ActivityCompat.shouldShowRequestPermissionRationale(
                     this,
                     android.Manifest.permission.POST_NOTIFICATIONS
                 ) -> {
-                    // Explain why you need the permission
                     Toast.makeText(this, "Notifications help remind you to drink water", Toast.LENGTH_LONG).show()
                     requestNotificationPermission()
                 }
                 else -> {
-                    // Request the permission
                     requestNotificationPermission()
                 }
             }
@@ -335,8 +318,7 @@ class Hydration : AppCompatActivity() {
     private fun setupBottomNavigation() {
         val hydrationBtn = findViewById<ImageView>(R.id.profileBtn10)
 
-        // Set hydration icon to blue
-        hydrationBtn.setColorFilter(ContextCompat.getColor(this, R.color.primary_color))
+         hydrationBtn.setColorFilter(ContextCompat.getColor(this, R.color.primary_color))
 
         findViewById<ImageView>(R.id.homeBtn10).setOnClickListener {
             val intent = Intent(this, Home::class.java)
@@ -360,7 +342,6 @@ class Hydration : AppCompatActivity() {
         }
 
         hydrationBtn.setOnClickListener {
-            // Already on hydration page, refresh
             loadTodayWaterData()
         }
 
