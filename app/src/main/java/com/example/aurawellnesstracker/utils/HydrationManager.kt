@@ -111,7 +111,6 @@ class HydrationManager(context: Context) {
                 0
             }
 
-            // Get day name
             val dayName = when (i) {
                 0 -> "Today"
                 1 -> "Yesterday"
@@ -174,7 +173,6 @@ class HydrationManager(context: Context) {
     fun setReminderInterval(interval: Int): Boolean {
         val success = editor.putInt(KEY_REMINDER_INTERVAL, interval).commit()
         if (success) {
-            // Always update the scheduler when interval changes
             val isEnabled = isReminderEnabled()
             Log.d("HydrationManager", "Setting reminder interval: $interval minutes, enabled: $isEnabled")
             reminderScheduler.updateReminder(isEnabled, interval)
