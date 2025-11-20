@@ -1,12 +1,14 @@
 package com.example.aurawellnesstracker.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.aurawellnesstracker.R
@@ -89,7 +91,9 @@ class Home : AppCompatActivity() {
         }
 
         findViewById<MaterialButton>(R.id.viewProgressButton).setOnClickListener {
-            Toast.makeText(this, "Progress view coming soon!", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, OverviewActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
         }
     }
 
@@ -211,7 +215,12 @@ class Home : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
-        findViewById<ImageView>(R.id.homeBtn10).setOnClickListener {
+        val homeBtn = findViewById<ImageView>(R.id.homeBtn10)
+
+        // Set home icon to blue
+        homeBtn.setColorFilter(ContextCompat.getColor(this, R.color.primary_color))
+
+        homeBtn.setOnClickListener {
             val intent = Intent(this, Home::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0)

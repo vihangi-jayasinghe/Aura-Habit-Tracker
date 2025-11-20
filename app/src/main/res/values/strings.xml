@@ -1,52 +1,205 @@
 <resources>
-    <string name="app_name">AuraBloom</string>
-
-    <!-- Bottom Navigation -->
+    <string name="app_name">Aura</string>
     <string name="bottom">Home</string>
     <string name="bottom1">Habit</string>
     <string name="bottom2">Mood</string>
     <string name="bottom3">Hydration</string>
     <string name="bottom4">Settings</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
-        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
-        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
-        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
-        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
-        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
-        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
-        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
-        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
-        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
-        bibendum, vel congue leo egestas.\n\n
-        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
-        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
-        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
-        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
-        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
-        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
-        est.\n\n
-        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
-        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
-        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
-        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
-        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
-        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
-        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
-        convallis.\n\n
-        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
-        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
-        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
-        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
-        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
-        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
-        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
-    </string>
+    <string name="addEditHabit1">Add New Habit</string>
+    <string name="addEditHabit2">Create a new habit to track your wellness journey</string>
+    <string name="addEditHabit3">Habit Title</string>
+    <string name="addEditHabit4">Description (Optional)</string>
+    <string name="addEditHabit5">Category</string>
+    <string name="addEditHabit6">Target Days</string>
+    <string name="addEditHabit7">7</string>
+    <string name="addEditHabit8">Reminder Time (Optional)</string>
+    <string name="addEditHabit9">Set a daily reminder to help build your habit</string>
+    <string name="addEditHabit10">Cancel</string>
+    <string name="addEditHabit11">Save</string>
+    <string name="addEditHabit12">Delete Habit</string>
+    <string name="forgot_password1">Forgot Password</string>
+    <string name="forgot_password2">Enter your email address and we\'ll send you instructions to reset your password</string>
+    <string name="forgot_password3">Email</string>
+    <string name="forgot_password4">Send Reset Instructions</string>
+    <string name="forgot_password5">Reset instructions sent to your email!</string>
+    <string name="forgot_password6">Remember your password?</string>
+    <string name="forgot_password7">Sign In</string>
+    <string name="habit1">Habit Tracker</string>
+    <string name="habit2">Build positive habits and track your progress</string>
+    <string name="habit3">Today\'s Progress</string>
+    <string name="habit4">September 30, 2025</string>
+    <string name="habit5">3</string>
+    <string name="habit6">Completed</string>
+    <string name="habit7">Total Habits</string>
+    <string name="habit8">60%</string>
+    <string name="habit9">Completed</string>
+    <string name="habit10">Good progress! Keep it up!</string>
+    <string name="habit11">Quick Actions</string>
+    <string name="habit12">Add Habit</string>
+    <string name="habit13">Complete All</string>
+    <string name="habit14">Habit Categories</string>
+    <string name="habit15">Health</string>
+    <string name="habit16">Fitness</string>
+    <string name="habit17">Productivity</string>
+    <string name="habit18">Mindfulness</string>
+    <string name="habit19">Learning</string>
+    <string name="habit20">All</string>
+    <string name="habit21">Daily Habits</string>
+    <string name="habit22">No habits added yet\nTap \'Add Habit\' to get started</string>
+    <string name="habit23">5</string>
+    <string name="home1">Welcome Back!</string>
+    <string name="home2">Track your wellness journey</string>
+    <string name="home3">Today\'s Overview</string>
+    <string name="home4">September 30, 2025</string>
+    <string name="home5">😊</string>
+    <string name="home6">Mood</string>
+    <string name="home7">1.3L</string>
+    <string name="home8">Hydration</string>
+    <string name="home9">3/5</string>
+    <string name="home10">Habits</string>
+    <string name="home12">7 days</string>
+    <string name="home13">Streak</string>
+    <string name="home14">Quick Actions</string>
+    <string name="home15">Log Mood</string>
+    <string name="home16">Add Water</string>
+    <string name="home17">Track Habit</string>
+    <string name="home18">Overview</string>
+    <string name="home19">Recent Activity</string>
+    <string name="home20">No recent activity\nYour wellness activities will appear here</string>
+    <string name="hydration1">Hydration Tracker</string>
+    <string name="hydration2">Stay hydrated and track your daily water intake</string>
+    <string name="hydration3">Today\'s Hydration</string>
+    <string name="hydration4">September 30, 2025</string>
+    <string name="hydration5">1.3</string>
+    <string name="hydration6">Liters</string>
+    <string name="hydration7">of 2.0L goal</string>
+    <string name="hydration8">65% Completed</string>
+    <string name="hydration9">Quick Add Water</string>
+    <string name="hydration10">250ml</string>
+    <string name="hydration11">500ml</string>
+    <string name="hydration12">1000ml</string>
+    <string name="hydration13">Custom amount (ml)</string>
+    <string name="hydration14">Today\'s History</string>
+    <string name="hydration15">No water entries yet today.\nStart by adding some water!</string>
+    <string name="hydration16">Hydration Settings</string>
+    <string name="hydration17">Daily Water Goal</string>
+    <string name="hydration18">1.0L</string>
+    <string name="hydration19">4.0L</string>
+    <string name="hydration20">2.0L</string>
+    <string name="hydration21">Reminders</string>
+    <string name="hydration22">Enable Hydration Reminders</string>
+    <string name="hydration23">Reminder Interval</string>
+    <string name="hydration24">Add</string>
+    <string name="mood1">Mood Journal</string>
+    <string name="mood2">Track your daily emotions and mood patterns</string>
+    <string name="mood3">Today\'s Mood</string>
+    <string name="mood4">September 30, 2025</string>
+    <string name="mood5">😔</string>
+    <string name="mood6">Terrible</string>
+    <string name="mood7">😢</string>
+    <string name="mood8">Sad</string>
+    <string name="mood9">😐</string>
+    <string name="mood10">Neutral</string>
+    <string name="mood11">😊</string>
+    <string name="mood12">Happy</string>
+    <string name="mood13">🤩</string>
+    <string name="mood14">Excited</string>
+    <string name="mood15">😰</string>
+    <string name="mood16">Anxious</string>
+    <string name="mood17">😴</string>
+    <string name="mood18">Tired</string>
+    <string name="mood19">😊</string>
+    <string name="mood20">Happy</string>
+    <string name="mood21">2:30 PM</string>
+    <string name="mood22">Add Notes</string>
+    <string name="mood23">How are you feeling today?</string>
+    <string name="mood24">Save Mood Entry</string>
+    <string name="mood25">Recent Mood Entries</string>
+    <string name="mood26">No mood entries yet\nYour mood history will appear here</string>
+    <string name="onboard1_1">Track Your Wellness Journey</string>
+    <string name="onboard1_2">Monitor your mood, hydration, and habits in one place to build a healthier lifestyle</string>
+    <string name="onboard1_3">Next</string>
+    <string name="onboard1_4">Skip</string>
+    <string name="onboard2_1">Monitor Your Mood</string>
+    <string name="onboard2_2">Track your daily emotions and understand your mood patterns over time</string>
+    <string name="onboard3_1">Build Healthy Habits</string>
+    <string name="onboard3_2">Create and track daily habits to improve your overall wellbeing and productivity</string>
+    <string name="onboard3_3">Get Started</string>
+    <string name="overview1">Progress Overview</string>
+    <string name="overview2">Track your wellness trends and progress</string>
+    <string name="overview3">Mood Trends</string>
+    <string name="overview4">Hydration Trends</string>
+    <string name="overview5">Habits Progress</string>
+    <string name="profile1">My Profile</string>
+    <string name="profile2">Manage your personal information and preferences</string>
+    <string name="profile3">Profile Information</string>
+    <string name="profile5">John Doe</string>
+    <string name="profile6">john.doe@example.com</string>
+    <string name="settings1">Settings</string>
+    <string name="settings2">Customize your wellness experience</string>
+    <string name="settings3">Account Settings</string>
+    <string name="settings4">John Doe</string>
+    <string name="settings5">john.doe@example.com</string>
+    <string name="settings6">Edit</string>
+    <string name="settings7">Push Notifications</string>
+    <string name="settings8">Mood Reminders</string>
+    <string name="settings9">Hydration Reminders</string>
+    <string name="settings10">Habit Reminders</string>
+    <string name="settings11">Support</string>
+    <string name="settings12">Help and FAQ</string>
+    <string name="settings13">Contact Support</string>
+    <string name="settings14">Privacy Policy</string>
+    <string name="settings15">Terms of Service</string>
+    <string name="settings16">App Information</string>
+    <string name="settings17">App Version</string>
+    <string name="settings18">1.0.0</string>
+    <string name="settings19">Build Date</string>
+    <string name="settings20">September 2025</string>
+    <string name="settings21">Log Out</string>
+    <string name="signin1">Welcome Back</string>
+    <string name="signin2">Sign in to continue your wellness journey</string>
+    <string name="signin3">Email</string>
+    <string name="signin4">Password</string>
+    <string name="signin5">Forgot Password?</string>
+    <string name="signin6">Sign In</string>
+    <string name="signin7">or continue with</string>
+    <string name="signin8">Don\'t have an account?</string>
+    <string name="signin9">Sign Up</string>
+    <string name="signup1">Create Account</string>
+    <string name="signup2">Start your wellness journey today</string>
+    <string name="signup3">Full Name</string>
+    <string name="signup4">Email</string>
+    <string name="signup5">Password</string>
+    <string name="signup6">Confirm Password</string>
+    <string name="signup7">I agree to the Terms of Service and Privacy Policy</string>
+    <string name="signup8">Create Account</string>
+    <string name="signup9">Already have an account?</string>
+    <string name="signup10">Sign In</string>
+    <string name="editgoal1">Set your daily goal:</string>
+    <string name="editgoal2">Enter goal</string>
+    <string name="editgoal3">Units</string>
+    <string name="editprofile1">Full Name</string>
+    <string name="editprofile2">Email Address</string>
+    <string name="edithabit1">Habit Title</string>
+    <string name="edithabit2">Description</string>
+    <string name="edithabit3">Category</string>
+    <string name="edithabit4">0 days</string>
+    <string name="edithabit5">Edit habit</string>
+    <string name="moodentry1">😊</string>
+    <string name="moodentry2">2:30 PM</string>
+    <string name="moodentry3">Feeling great today!</string>
+    <string name="moodentry4">Edit mood</string>
+    <string name="moodentry5">Delete mood</string>
+    <string name="recent1">Mood</string>
+    <string name="recent12">Logged mood: Happy</string>
+    <string name="recent3">2:30 PM</string>
+    <string name="water1">250ml</string>
+    <string name="water2">2:30 PM</string>
+    <string name="weeklybar1">65%</string>
+    <string name="weeklybar2">1.3L</string>
+    <string name="weeklybar3">Mon</string>
 </resources>

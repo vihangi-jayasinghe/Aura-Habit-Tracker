@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set your daily goal:"
+        android:text="@string/editgoal1"
         android:textSize="16sp"
         android:textColor="@color/text_primary"
         android:layout_marginBottom="16dp" />
@@ -27,13 +27,13 @@
             android:layout_marginEnd="8dp"
             android:inputType="numberDecimal"
             android:maxLines="1"
-            android:hint="Enter goal" />
+            android:hint="@string/editgoal2" />
 
         <TextView
             android:id="@+id/goalUnitText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Units"
+            android:text="@string/editgoal3"
             android:textSize="14sp"
             android:textColor="@color/text_secondary" />
 

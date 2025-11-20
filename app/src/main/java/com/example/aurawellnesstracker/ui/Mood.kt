@@ -16,6 +16,7 @@ import com.example.aurawellnesstracker.utils.MoodManager
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.content.ContextCompat
 
 class Mood : AppCompatActivity() {
 
@@ -142,7 +143,6 @@ class Mood : AppCompatActivity() {
         }
 
         if (editingMoodEntry != null) {
-            // Update existing entry
             val updatedEntry = editingMoodEntry!!.copy(
                 moodType = moodType,
                 emoji = MoodEntry.getEmojiForMood(moodType),
@@ -159,7 +159,6 @@ class Mood : AppCompatActivity() {
                 Toast.makeText(this, "Failed to update mood", Toast.LENGTH_SHORT).show()
             }
         } else {
-            // Create new entry
             val newEntry = MoodEntry(
                 moodType = moodType,
                 emoji = MoodEntry.getEmojiForMood(moodType),
@@ -182,7 +181,6 @@ class Mood : AppCompatActivity() {
         selectedMoodLayout.visibility = LinearLayout.VISIBLE
         saveMoodButton.text = "Update Mood Entry"
 
-        // Scroll to top - using the main ScrollView in activity_mood.xml
         val scrollView = findViewById<ScrollView>(R.id.scrollView)
         scrollView?.smoothScrollTo(0, 0)
     }
@@ -196,7 +194,6 @@ class Mood : AppCompatActivity() {
                     Toast.makeText(this, "Mood entry deleted", Toast.LENGTH_SHORT).show()
                     loadTodayMoodEntries()
 
-                    // If we were editing this entry, reset the form
                     if (editingMoodEntry?.id == moodEntry.id) {
                         resetForm()
                     }
@@ -222,12 +219,16 @@ class Mood : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
+        val moodBtn = findViewById<ImageView>(R.id.productBtn10)
+
+        moodBtn.setColorFilter(ContextCompat.getColor(this, R.color.primary_color))
+
         findViewById<ImageView>(R.id.homeBtn10).setOnClickListener {
             val intent = Intent(this, Home::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0)
         }
-        findViewById<ImageView>(R.id.productBtn10).setOnClickListener {
+        moodBtn.setOnClickListener {
             val intent = Intent(this, Mood::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0)

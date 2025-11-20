@@ -27,7 +27,7 @@
             android:id="@+id/activityType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mood"
+            android:text="@string/recent1"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:id="@+id/activityDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logged mood: Happy"
+            android:text="@string/recent12"
             android:textColor="@color/text_secondary"
             android:textSize="12sp"
             android:layout_marginTop="2dp" />
@@ -47,7 +47,7 @@
         android:id="@+id/activityTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2:30 PM"
+        android:text="@string/recent3"
         android:textColor="@color/text_secondary"
         android:textSize="12sp" />
 

@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class WaterEntry(
     val id: String = "",
-    val amount: Int, // in milliliters
+    val amount: Int,
     val timestamp: Long = System.currentTimeMillis(),
     val notes: String = ""
 ) : Parcelable

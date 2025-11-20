@@ -18,11 +18,8 @@ import android.content.pm.PackageManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import com.example.aurawellnesstracker.utils.NotificationHelper
-import com.example.aurawellnesstracker.utils.ReminderScheduler
 import java.util.*
+import android.graphics.Color
 
 class Hydration : AppCompatActivity() {
     private lateinit var hydrationManager: HydrationManager
@@ -42,23 +39,25 @@ class Hydration : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_hydration)
 
-        hydrationManager = HydrationManager(this)
-        initializeViews()
-        setupButtonListeners()
-        setupBottomNavigation()
-        loadTodayWaterData()
-        setupReminderSettings()
-        updateDateDisplay()
+        try {
+            hydrationManager = HydrationManager(this)
+            initializeViews()
+            setupButtonListeners()
+            setupBottomNavigation()
+            loadTodayWaterData()
+            setupReminderSettings()
+            updateDateDisplay()
 
-        // Comment out or remove this line as it might cause issues
-        // debugReminderSchedule()
+            checkAndRequestNotificationPermission()
 
-        checkAndRequestNotificationPermission()
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
+        } catch (e: Exception) {
+            Log.e("Hydration", "Error in onCreate", e)
+            Toast.makeText(this, "App error occurred", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -76,7 +75,6 @@ class Hydration : AppCompatActivity() {
     }
 
     private fun setupButtonListeners() {
-        // Quick add water buttons
         findViewById<MaterialButton>(R.id.waterSmall).setOnClickListener {
             addWater(250)
         }
@@ -89,12 +87,10 @@ class Hydration : AppCompatActivity() {
             addWater(1000)
         }
 
-        // Custom water amount
         findViewById<MaterialButton>(R.id.addCustomWater).setOnClickListener {
             addCustomWater()
         }
 
-        // Goal seekbar listener
         waterGoalSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
@@ -108,7 +104,6 @@ class Hydration : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        // Reminder switch
         reminderSwitch.setOnCheckedChangeListener { _, isChecked ->
             hydrationManager.setReminderEnabled(isChecked)
             val message = if (isChecked) {
@@ -118,41 +113,6 @@ class Hydration : AppCompatActivity() {
             }
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
-
-        // Add test notification button
-        findViewById<MaterialButton>(R.id.testNotificationButton).setOnClickListener {
-            testNotificationImmediately()
-        }
-    }
-
-    private fun testNotificationImmediately() {
-        Log.d("HydrationTest", "Manual test notification triggered")
-        NotificationHelper(this).showHydrationReminder()
-        Toast.makeText(this, "Test notification sent!", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun debugReminderSchedule() {
-        val workManager = WorkManager.getInstance(this)
-        workManager.getWorkInfosForUniqueWorkLiveData(ReminderScheduler.REMINDER_WORK_NAME)
-            .observe(this) { workInfos ->
-                workInfos.forEach { workInfo ->
-                    Log.d("HydrationDebug", "Work State: ${workInfo.state}")
-                    Log.d("HydrationDebug", "Work ID: ${workInfo.id}")
-                    Log.d("HydrationDebug", "Tags: ${workInfo.tags}")
-
-                    // Alternative way to check if work is scheduled
-                    if (workInfo.state == WorkInfo.State.ENQUEUED) {
-                        Log.d("HydrationDebug", "Work is scheduled and waiting")
-                    }
-                }
-
-                // Log the count of work infos
-                Log.d("HydrationDebug", "Total work infos: ${workInfos.size}")
-
-                // Check if any work is enqueued
-                val hasEnqueuedWork = workInfos.any { it.state == WorkInfo.State.ENQUEUED }
-                Log.d("HydrationDebug", "Has enqueued work: $hasEnqueuedWork")
-            }
     }
 
     private fun addWater(amount: Int) {
@@ -187,19 +147,24 @@ class Hydration : AppCompatActivity() {
         val goal = hydrationManager.getDailyGoal()
         val percentage = hydrationManager.getCompletionPercentage()
 
-        // Update progress
         hydrationProgress.progress = percentage
         currentWaterIntake.text = String.format("%.1f", todayTotal / 1000.0)
         currentGoalText.text = String.format("%.1fL", goal / 1000.0)
 
-        // Update progress text
         progressText.text = "$percentage% Completed"
 
-        // Load water history
+        updateGoalInfoText(goal)
+
         loadWaterHistory()
 
-        // Update goal seekbar
         waterGoalSeekBar.progress = (goal / 100) - 10
+    }
+
+    private fun updateGoalInfoText(goal: Int) {
+        val circularProgressLayout = findViewById<RelativeLayout>(R.id.circularProgressLayout)
+        val goalInfoText = circularProgressLayout?.findViewById<TextView>(R.id.goalInfoText)
+
+        goalInfoText?.text = String.format("of %.1fL goal", goal / 1000.0)
     }
 
     private fun loadWaterHistory() {
@@ -247,16 +212,13 @@ class Hydration : AppCompatActivity() {
     }
 
     private fun setupReminderSettings() {
-        // Set initial switch state
         reminderSwitch.isChecked = hydrationManager.isReminderEnabled()
 
-        // Setup reminder interval spinner
         val intervals = arrayOf("5 minutes", "10 minutes", "20 minutes", "1 hour")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, intervals)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         reminderIntervalSpinner.adapter = adapter
 
-        // Set current interval
         val currentInterval = hydrationManager.getReminderInterval()
         val position = when (currentInterval) {
             5 -> 0
@@ -278,7 +240,6 @@ class Hydration : AppCompatActivity() {
                 }
                 hydrationManager.setReminderInterval(interval)
 
-                // Show confirmation toast
                 val intervalText = intervals[position]
                 Toast.makeText(this@Hydration,
                     "Reminders set to $intervalText",
@@ -304,7 +265,6 @@ class Hydration : AppCompatActivity() {
         private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1001
     }
 
-    // Add this method to check and request permission
     private fun checkAndRequestNotificationPermission() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             when {
@@ -312,19 +272,16 @@ class Hydration : AppCompatActivity() {
                     this,
                     android.Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED -> {
-                    // Permission already granted
-                    Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
+                     Log.d("Notification", "Notification permission granted")
                 }
                 ActivityCompat.shouldShowRequestPermissionRationale(
                     this,
                     android.Manifest.permission.POST_NOTIFICATIONS
                 ) -> {
-                    // Explain why you need the permission
                     Toast.makeText(this, "Notifications help remind you to drink water", Toast.LENGTH_LONG).show()
                     requestNotificationPermission()
                 }
                 else -> {
-                    // Request the permission
                     requestNotificationPermission()
                 }
             }
@@ -341,7 +298,6 @@ class Hydration : AppCompatActivity() {
         }
     }
 
-    // Add this to handle permission result
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -360,6 +316,10 @@ class Hydration : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
+        val hydrationBtn = findViewById<ImageView>(R.id.profileBtn10)
+
+         hydrationBtn.setColorFilter(ContextCompat.getColor(this, R.color.primary_color))
+
         findViewById<ImageView>(R.id.homeBtn10).setOnClickListener {
             val intent = Intent(this, Home::class.java)
             startActivity(intent)
@@ -381,8 +341,7 @@ class Hydration : AppCompatActivity() {
             overridePendingTransition(0, 0)
         }
 
-        findViewById<ImageView>(R.id.profileBtn10).setOnClickListener {
-            // Already on hydration page, refresh
+        hydrationBtn.setOnClickListener {
             loadTodayWaterData()
         }
 

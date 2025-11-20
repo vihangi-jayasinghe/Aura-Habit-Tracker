@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="4dp">
+
+    <TextView
+        android:id="@+id/percentageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/weeklybar1"
+        android:textColor="@color/text_primary"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <RelativeLayout
+        android:layout_width="24dp"
+        android:layout_height="120dp"
+        android:gravity="bottom">
+
+        <View
+            android:id="@+id/barBackground"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:background="@color/progress_track"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <View
+            android:id="@+id/barFill"
+            android:layout_width="20dp"
+            android:layout_height="80dp"
+            android:background="@color/primary_color"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/amountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/weeklybar2"
+        android:textColor="@color/text_secondary"
+        android:textSize="10sp"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/dayNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/weeklybar3"
+        android:textColor="@color/text_primary"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp" />
+
+</LinearLayout>

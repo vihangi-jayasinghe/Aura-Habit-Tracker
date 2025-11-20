@@ -30,7 +30,7 @@
             android:id="@+id/habitTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Habit Title"
+            android:text="@string/edithabit1"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:id="@+id/habitDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="@string/edithabit2"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
             android:maxLines="2"
@@ -58,7 +58,7 @@
                 android:background="@drawable/category_pill_background"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="Category"
+                android:text="@string/edithabit3"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="0 days"
+                android:text="@string/edithabit4"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
 
@@ -83,7 +83,7 @@
         android:layout_marginStart="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_edit"
-        android:contentDescription="Edit habit"
+        android:contentDescription="@string/edithabit5"
         app:tint="@color/primary_color" />
 
 </LinearLayout>
